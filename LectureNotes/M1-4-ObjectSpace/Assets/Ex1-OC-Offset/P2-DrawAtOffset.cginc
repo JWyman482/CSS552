@@ -1,4 +1,3 @@
-
 #ifndef P2_INC
 #define P2_INC
 #pragma vertex vert

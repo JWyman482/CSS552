@@ -1,3 +1,4 @@
+#pragma once
 #pragma vertex VertexProgram
 #pragma fragment FragmentProgram
             
@@ -6,19 +7,19 @@
 struct DataFromVertex
 {
     float4 vertex : POSITION;
+    float2 uv : TEXCOORD0;
 };
 
 struct DataForFragmentShader
 {
+    float2 uv : TEXCOORD0;
     float4 vertex : SV_POSITION;
 };
 
-struct OutputFromFragmentShader
-{
-    float4 color : SV_Target;
-};
-
+sampler2D _MainTex;
+float4 _MainTex_ST;
 float4 _Color;
+float _ColorWeight;
 
 DataForFragmentShader VertexProgram(DataFromVertex input)
 {
@@ -27,14 +28,18 @@ DataForFragmentShader VertexProgram(DataFromVertex input)
 
     p = mul(unity_ObjectToWorld, p);
     p = mul(UNITY_MATRIX_V, p);
-    output.vertex = mul(UNITY_MATRIX_P, p);
-
+    p = mul(UNITY_MATRIX_P, p);
+    output.vertex = p; 
+    output.uv = TRANSFORM_TEX(input.uv, _MainTex);
+    
     return output;
 }
 
-OutputFromFragmentShader FragmentProgram(DataForFragmentShader input)
+float4 FragmentProgram(DataForFragmentShader input) : SV_Target
 {
-    OutputFromFragmentShader output;
-    output.color = _Color;
-    return output;
+    
+    float4 c1 = tex2D(_MainTex, input.uv);
+    
+    
+    return _ColorWeight * c1 + (1 - _ColorWeight) * _Color;
 }
