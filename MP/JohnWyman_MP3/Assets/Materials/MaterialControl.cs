@@ -102,13 +102,31 @@ public class MaterialControl : MonoBehaviour
 
     uint UpdateControlFlag() {
         uint f = 0x0;
-        // You wil have to compute this flag
-        if (ShowOriginal) f = SHOW_ORIGINAL;
+        if (ShowOriginal) f |= SHOW_ORIGINAL;
 
-        // OC Flag Settings
-        if (OC_Show) f += OC_SHOW;
-        if (OC_Animated) f += OC_ANIMATED;
-        if (OC_UseVPoint) f += OC_USE_VPOINT;
+        // OC Flags
+        if (OC_Show) f |= OC_SHOW;
+        if (OC_Animated) f |= OC_ANIMATED;
+        if (OC_UseVPoint) f |= OC_USE_VPOINT;
+
+        // WC Flags
+        if (WC_Show) f |= WC_SHOW;
+        if (WC_Animated) f |= WC_ANIMATED;
+        if (WC_UseOCVPoint) f |= WC_USE_OCVPOINT;
+
+        // EC Flags
+        if (EC_Show) f |= EC_SHOW;
+        if (EC_Animated) f |= EC_ANIMATED;
+        if (EC_UseOCVPoint) f |= EC_USE_OCVPOINT;
+        if (EC_UseWCVPoint) f |= EC_USE_WCVPOINT;
+        if (EC_OnlyZ) f |= EC_ONLY_Z;
+
+        // PC Flags
+        if (PC_Show) f |= PC_SHOW;
+        if (PC_Animated) f |= PC_ANIMATED;
+        if (PC_UseOCVPoint) f |= PC_USE_OCVPOINT;
+        if (PC_UseWCVPoint) f |= PC_USE_WCVPOINT;
+
         return f;
     }
 };

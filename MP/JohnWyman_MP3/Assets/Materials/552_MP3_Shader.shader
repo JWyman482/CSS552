@@ -34,111 +34,42 @@ Shader "552_Shaders/552_MP3_Shader"
         Cull off
         Pass  // Vanishing in object coordinate space
         {
+            Name "OC Pass"
             CGPROGRAM
-                #pragma vertex VertexProgram
-                #pragma fragment FragmentProgram
-
-                #include "UnityCG.cginc"
-                #include "Structs.cginc"   
-
-                int _UserControl;
-                float4 _Color;
-                float3 _OCVPoint;
-
-                // Variables provided by Unity:
-                //        https://docs.unity3d.com/Manual/SL-UnityShaderVariables.html
-                //
-                DataForFragmentShader VertexProgram(DataFromVertex input)
-                {
-                    DataForFragmentShader output;
-                    float4 p = input.vertex;
-                    float4 VPoint = float4(_OCVPoint, 1);
-                    
-                    // If OC_Animate is false
-                    float w = _OCWeight;
-
-                    // If OC is !selected, discard. Else:
-                    p += _SinTime.z * _OCWeight * (VPoint - p);
-
-                    p = mul(unity_ObjectToWorld, p);  // objcet to world
-                    p = mul(UNITY_MATRIX_V, p);  // To eye space
-                    p = mul(UNITY_MATRIX_P, p);  // Projection 
-
-                    output.vertex = p;
-
-                    return output;
-                }
-
-                OutputFromFragmentShader FragmentProgram(DataForFragmentShader input)
-                {
-                    OutputFromFragmentShader output;
-                    if (!FLAG_IS_ON(SHOW_ORIGINAL))
-                        discard;
-                    output.color = _Color;
-                    return output;
-                }
+                #include "OCPass.cginc"
             ENDCG
         }
 
-        //Pass  // Vanishing towards the world point
-        //{
-        //    CGPROGRAM
-        //        // WC Pass code
-        //    ENDCG
-        //}
+        Pass  // Vanishing towards the world point
+        {
+            Name "WC Pass"
+            CGPROGRAM
+                #include "WCPass.cginc"
+            ENDCG
+        }
 
-        //Pass // Vanishing in eye space
-        //{
-        //    CGPROGRAM
-        //        // EC Pass
-        //    ENDCG
-        //}
-        //Pass  // Vanishing towards the center of window in projected coordinate
-        //{
-        //    CGPROGRAM
-        //        // PC Pass
-        //    ENDCG
-        //}
+        Pass // Vanishing in eye space
+        {
+            Name "EC Pass"
+            CGPROGRAM
+                #include "ECPass.cginc"
+            ENDCG
+        }
+        
+        Pass  // Vanishing towards the center of window in projected coordinate
+        {
+            Name "PC Pass"
+            CGPROGRAM
+                #include "PCPass.cginc"
+            ENDCG
+        }
 
         Pass // Show original in white
         {
+            Name "Base Pass"
             CGPROGRAM
-                #pragma vertex VertexProgram
-                #pragma fragment FragmentProgram
-
-                #include "UnityCG.cginc"
-                #include "Structs.cginc"   
-
-                int _UserControl;
-                float4 _Color;    
-
-                // Variables provided by Unity:
-                //        https://docs.unity3d.com/Manual/SL-UnityShaderVariables.html
-                //
-                DataForFragmentShader VertexProgram(DataFromVertex input)
-                {
-                    DataForFragmentShader output;
-                    float4 p = input.vertex;
-
-                    p = mul(unity_ObjectToWorld, p);  // objcet to world
-                    p = mul(UNITY_MATRIX_V, p);  // To eye space
-                    p = mul(UNITY_MATRIX_P, p);  // Projection 
-                    
-                    output.vertex = p;
-
-                    return output;
-                }
-
-                OutputFromFragmentShader FragmentProgram(DataForFragmentShader input)
-                {
-                    OutputFromFragmentShader output;
-                    if (!FLAG_IS_ON(SHOW_ORIGINAL))
-                        discard;
-                    output.color = _Color;
-                    return output;
-                }
+                #include "BasePass.cginc"
             ENDCG
-
         } // Pass
     } // SubShader
 }
