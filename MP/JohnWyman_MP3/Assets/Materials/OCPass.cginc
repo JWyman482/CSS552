@@ -13,16 +13,17 @@ DataForFragmentShader VertexProgram(DataFromVertex input)
 
     DataForFragmentShader output;
     float4 p = input.vertex;
-    float4 VPoint = (0, 0, 0, 1);
+    float3 VPoint = (0, 0, 0);
     float w = _OCWeight;
 
     if (FLAG_IS_ON(OC_ANIMATED))   
         w = 0.5 * (1 + _SinTime.z);
                     
     if (FLAG_IS_ON(OC_USE_VPOINT)) 
-        VPoint = float4(_OCVPoint, 1);
+        //VPoint = float4(_OCVPoint, 1);
+        VPoint = _OCVPoint;
     
-    p.xyz += w * (VPoint - p);
+    p.xyz += w * (VPoint - p.xyz);
 
     p = mul(unity_ObjectToWorld, p); // objcet to world
     p = mul(UNITY_MATRIX_V, p); // To eye space

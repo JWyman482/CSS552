@@ -16,21 +16,38 @@ DataForFragmentShader VertexProgram(DataFromVertex input)
     DataForFragmentShader output;
     float4 p = input.vertex;
     float w = _WCWeight;
-    float4 VPoint = float4(_WCVPoint, 1);
-    
-    p = mul(unity_ObjectToWorld, p); // objcet to world
+    float3 VPoint = _WCVPoint;
     
     if (FLAG_IS_ON(WC_ANIMATED))
         w = pow(abs(_SinTime.z), _WCRate);
     
     if (FLAG_IS_ON(WC_USE_OCVPOINT))
     {
-        VPoint = float4(_OCVPoint, 1);
-        VPoint = mul(unity_ObjectToWorld, VPoint);
+        VPoint = _OCVPoint;
+        p.xyz += w * (VPoint - p.xyz);
+        p = mul(unity_ObjectToWorld, p);
+    }
+    else
+    {
+        p = mul(unity_ObjectToWorld, p);
+        p.xyz += w * (VPoint - p.xyz);
     }
     
-    p.xyz += w * (VPoint - p);
-
+    //// START manual translation stuff
+    //p = mul(unity_ObjectToWorld, p); // objcet to world
+    
+    //if (FLAG_IS_ON(WC_ANIMATED))
+    //    w = pow(abs(_SinTime.z), _WCRate);
+    
+    //if (FLAG_IS_ON(WC_USE_OCVPOINT))
+    //{
+    //    VPoint = _OCVPoint;
+    //    VPoint = mul(unity_WorldToObject, VPoint);
+    //}
+    
+    //p.xyz += w * (VPoint - p.xyz);
+    //// END manual translation stuff
+    
     p = mul(UNITY_MATRIX_V, p); // To eye space
     p = mul(UNITY_MATRIX_P, p); // Projection 
     output.vertex = p;

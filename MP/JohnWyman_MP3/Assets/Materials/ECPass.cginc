@@ -14,7 +14,7 @@ DataForFragmentShader VertexProgram(DataFromVertex input)
 {
     DataForFragmentShader output;
     float4 p = input.vertex;
-    float4 VPoint = float4(0, 0, -_ECNear, 1);
+    float3 VPoint = (0, 0, -_ECNear);
     float w = _ECWeight;
                     
     p = mul(unity_ObjectToWorld, p); // objcet to world
@@ -23,25 +23,28 @@ DataForFragmentShader VertexProgram(DataFromVertex input)
     if (FLAG_IS_ON(EC_ANIMATED))
         w = 0.5 * (1 + _CosTime.z);
 
-    if (FLAG_IS_ON(EC_USE_OCVPOINT))
-    {
-        VPoint = float4(_OCVPoint, 1);
-        VPoint = mul(UNITY_MATRIX_V, VPoint);
-    }
+    //if (FLAG_IS_ON(EC_USE_OCVPOINT))
+    //{
+    //    VPoint = _OCVPoint;
+    //    //VPoint = mul(unity_ObjectToWorld, VPoint);
+    //    //VPoint = mul(UNITY_MATRIX_V, VPoint);
+    //}
     
-    // If we don't include the AND below, we run the risk of 
-    // transforming to VPoint to EC twice if both boxes are
-    // checked.
-    if (FLAG_IS_ON(EC_USE_WCVPOINT) && !FLAG_IS_ON(EC_USE_OCVPOINT))
-    {
-        VPoint = float4(_WCVPoint, 1);
-        VPoint = mul(UNITY_MATRIX_V, VPoint);
-    }
+    //// If we don't include the AND below, we run the risk of 
+    //// transforming to VPoint to EC twice if both boxes are
+    //// checked.
+    //if (FLAG_IS_ON(EC_USE_WCVPOINT) && !FLAG_IS_ON(EC_USE_OCVPOINT))
+    //{
+    //    VPoint = _WCVPoint;
+    //    VPoint = mul(UNITY_MATRIX_V, VPoint);
+    //}
     
-    if (FLAG_IS_ON(EC_ONLY_Z))
-        p.z += w * (VPoint.z - p.z);
-    else
-        p.xyz += w * (VPoint - p);
+    //if (FLAG_IS_ON(EC_ONLY_Z))
+    //    p.z += w * (VPoint.z - p.z);
+    //else
+    //    p.xyz += w * (VPoint - p.xyz);
+    
+    p.xyz += w * (VPoint - p.xyz);
     
     p = mul(UNITY_MATRIX_P, p); // Projection 
     output.vertex = p;

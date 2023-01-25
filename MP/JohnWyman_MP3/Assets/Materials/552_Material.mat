@@ -57,34 +57,34 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Ints:
-    - _UserControl: 36864
+    - _UserControl: 883
     m_Floats:
     - _BumpScale: 1
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
     - _ECNear: 0.3
-    - _ECWeight: 0.67
+    - _ECWeight: 1
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
     - _Metallic: 0
     - _Mode: 0
-    - _OCWeight: 0.86
+    - _OCWeight: 1
     - _OcclusionStrength: 1
-    - _PCWeight: 0.09
+    - _PCWeight: 1
     - _Parallax: 0.02
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _UVSec: 0
-    - _WCRate: 2.23
+    - _WCRate: 1
     - _WCWeight: 1
     - _ZWrite: 1
     m_Colors:
-    - _Color: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+    - _Color: {r: 0.9528302, g: 0.049439307, b: 0.7773223, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _OCVPoint: {r: 5.49, g: 3.08, b: -6.93, a: 0}
-    - _PCVPoint: {r: 0.5, g: 0.5, b: 0, a: 0}
+    - _OCVPoint: {r: 0, g: 0, b: 0, a: 0}
+    - _PCVPoint: {r: 0, g: 0, b: 0, a: 0}
     - _WCVPoint: {r: 5, g: 1, b: 0, a: 0}
   m_BuildTextureStacks: []
