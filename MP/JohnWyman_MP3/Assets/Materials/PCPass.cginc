@@ -30,8 +30,6 @@ DataForFragmentShader VertexProgram(DataFromVertex input)
     if (FLAG_IS_ON(PC_USE_WCVPOINT) && !FLAG_IS_ON(PC_USE_OCVPOINT))
         VPoint = float4(_WCVPoint, 1);
     
-    VPoint = mul(UNITY_MATRIX_P, VPoint);
-    
     p.xyz /= p.w;
     p.xyz += w * (VPoint - p);
     p.xyz *= p.w;
