@@ -11,10 +11,12 @@ float _ECWeight;
 float _ECNear;
 
 float4 transVert(float4 p, float3 VPoint, float w) {
+    float4 target = float4(VPoint, 1);
+        
     if (FLAG_IS_ON(EC_ONLY_Z))
-        p.z += w * (VPoint.z - p.z);
+        p.z += w * (target.z - p.z);
     else
-        p.xyz += w * (VPoint.xyz - p.xyz);
+        p.xyz += w * (target - p);
     return p;
 }
 

@@ -142,6 +142,6 @@ public class ECFlags : Flags
 public class PCFlags : Flags
 {
     // Perspective Coordinate (PC) Space
-    public Vector3 VPoint = Vector3.zero;
     public bool UseWCVPoint = false;
+    public Vector3 VPoint = Vector3.zero;
 };

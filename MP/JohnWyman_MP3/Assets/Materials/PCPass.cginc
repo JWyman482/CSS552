@@ -12,7 +12,8 @@ float _PCWeight;
 
 float4 transVert(float4 p, float3 VPoint, float w)
 {
-    p.xyz += w * (VPoint.xyz - p.xyz);
+    float4 target = float4(VPoint, 1);
+    p.xyz += w * (target - p);
     return p;
 }
 
