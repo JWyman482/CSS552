@@ -813,8 +813,8 @@ MonoBehaviour:
     Show: 0
     Animate: 0
     UseOCVPoint: 0
-    VPoint: {x: 0, y: 0, z: 0}
     UseWCVPoint: 0
+    VPoint: {x: 0, y: 0, z: 0}
 --- !u!1 &1979696285
 GameObject:
   m_ObjectHideFlags: 0

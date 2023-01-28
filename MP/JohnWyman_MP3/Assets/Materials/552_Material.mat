@@ -21,13 +21,13 @@ Material:
     serializedVersion: 3
     m_TexEnvs: []
     m_Ints:
-    - _UserControl: 803
+    - _UserControl: 1048576
     m_Floats:
     - _ECNear: 0.3
     - _ECWeight: 1
     - _OCWeight: 1
     - _PCWeight: 1
-    - _WCRate: 100
+    - _WCRate: 1
     - _WCWeight: 1
     m_Colors:
     - _Color: {r: 0.5, g: 0.5, b: 0.5, a: 1}

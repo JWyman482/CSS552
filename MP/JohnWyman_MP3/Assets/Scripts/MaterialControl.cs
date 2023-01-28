@@ -32,6 +32,16 @@ public class MaterialControl : MonoBehaviour
     public bool ShowOriginal = true; // to see OC vanish, need to hide original
     public Color ObjColor = Color.gray;
 
+
+    // The Shared Mat flag will cause all 5 objects to use the global material if true.
+    // If false, the bl and br cubes will use their own.
+    [Tooltip("True: all 5 cubes use shared material. False: Bottom left and right use instance.")]
+    public bool sharedMat = false;
+    private GameObject bottomLeft = null;
+    private GameObject bottomRight = null;
+    private Color blColor;
+    private Color brColor;
+
     [Header("Flags")]
     public OCFlags OC;
     public WCFlags WC;
@@ -45,9 +55,37 @@ public class MaterialControl : MonoBehaviour
             mMat = GetComponent<Renderer>().material;  
             // this will create a separate instance of material for this game object
         }
+        else
+        {
+            // On Main Camera
+            bottomLeft = GameObject.Find("Bottom Left");
+            bottomRight = GameObject.Find("Bottom Right");
+            blColor = bottomLeft.GetComponent<MaterialControl>().ObjColor;
+            brColor = bottomRight.GetComponent<MaterialControl>().ObjColor;
+        }
     }
 
     void Update() {
+
+        if (sharedMat && bottomLeft != null)
+        {
+            bottomLeft.GetComponent<MaterialControl>().enabled = false;
+            bottomRight.GetComponent<MaterialControl>().enabled = false;
+            blColor = bottomLeft.GetComponent<MaterialControl>().ObjColor;
+            brColor = bottomRight.GetComponent<MaterialControl>().ObjColor;
+            bottomLeft.GetComponent<Renderer>().material = mMat;
+            bottomRight.GetComponent<Renderer>().material = mMat;
+        }
+        else if (!sharedMat && bottomLeft != null)
+        {
+            bottomLeft.GetComponent<MaterialControl>().enabled = true;
+            bottomRight.GetComponent<MaterialControl>().enabled = true;
+            bottomLeft.GetComponent<MaterialControl>().mMat = bottomLeft.GetComponent<Renderer>().material;
+            bottomRight.GetComponent<MaterialControl>().mMat = bottomRight.GetComponent<Renderer>().material; 
+            bottomLeft.GetComponent<MaterialControl>().ObjColor = blColor;
+            bottomRight.GetComponent<MaterialControl>().ObjColor = brColor;
+        }
+
         // Control flag update
         mMat.SetInteger("_UserControl", (int) UpdateControlFlag());
         if (EC.OccludeObject != null)
@@ -71,6 +109,9 @@ public class MaterialControl : MonoBehaviour
         mMat.SetVector("_PCVPoint", PC.VPoint);
     
         mMat.SetColor("_Color", ObjColor);
+
+
+
     }
 
     uint UpdateControlFlag() {
