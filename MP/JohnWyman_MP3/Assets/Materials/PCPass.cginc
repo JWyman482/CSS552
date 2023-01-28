@@ -33,7 +33,6 @@ DataForFragmentShader VertexProgram(DataFromVertex input)
         p = mul(unity_ObjectToWorld, p);    // Transform: To world
         p = mul(UNITY_MATRIX_V, p);         // Transform: To eye space
         p = mul(UNITY_MATRIX_P, p);         // Transform: To perspective
-
     }
 
     // OC flag takes precedent
