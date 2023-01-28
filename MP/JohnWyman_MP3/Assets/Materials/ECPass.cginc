@@ -22,37 +22,36 @@ DataForFragmentShader VertexProgram(DataFromVertex input)
 {
     DataForFragmentShader output;
     float4 p = input.vertex;
-    float w = _ECWeight;
-    float3 VPoint = float3(0, 0, -_ECNear);
+    float w;
     
     if (FLAG_IS_ON(EC_ANIMATED))
         w = 0.5 * (1 + _CosTime.z);
+    else
+        w = _ECWeight;
     
     if (FLAG_IS_ON(EC_USE_OCVPOINT))
     {
-        p = transVert(p, _OCVPoint, w);
-        p = mul(unity_ObjectToWorld, p); // objcet to world
-        p = mul(UNITY_MATRIX_V, p); // To eye space
+        p = transVert(p, _OCVPoint, w);             // Move vertices to OCVPoint in OC
+        p = mul(unity_ObjectToWorld, p);            // Transform: To world
+        p = mul(UNITY_MATRIX_V, p);                 // Transform: To eye space
     }
 
-    // If we don't include the AND below, we run the risk of 
-    // transforming to VPoint to EC twice if both boxes are
-    // checked.
+    // OC flag takes precedent
     if (FLAG_IS_ON(EC_USE_WCVPOINT) && !FLAG_IS_ON(EC_USE_OCVPOINT))
     {
-        p = mul(unity_ObjectToWorld, p); // objcet to world
-        p = transVert(p, _WCVPoint, w);
-        p = mul(UNITY_MATRIX_V, p); // To eye space
+        p = mul(unity_ObjectToWorld, p);            // Transform: To world
+        p = transVert(p, _WCVPoint, w);             // Move vertices to WCVPoint in WC
+        p = mul(UNITY_MATRIX_V, p);                 // Transform: To eye space
     }
 
     if (!FLAG_IS_ON(EC_USE_WCVPOINT) && !FLAG_IS_ON(EC_USE_OCVPOINT))
     {
-        p = mul(unity_ObjectToWorld, p); // objcet to world
-        p = mul(UNITY_MATRIX_V, p); // To eye space
-        p = transVert(p, VPoint, w);
+        p = mul(unity_ObjectToWorld, p);            // Transform: To world
+        p = mul(UNITY_MATRIX_V, p);                 // Transform: To eye space
+        p = transVert(p, float3(0, 0, -_ECNear), w);// Move vertices to center of camera in EC
     }
    
-    p = mul(UNITY_MATRIX_P, p); // Projection 
+    p = mul(UNITY_MATRIX_P, p);                     // Transform: To perspective
     output.vertex = p;
     return output;
 }

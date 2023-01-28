@@ -8,28 +8,34 @@ int _UserControl;
 float3 _OCVPoint;
 float _OCWeight;
 
+float4 transVert(float4 p, float3 VPoint, float w)
+{
+    p.xyz += w * (VPoint.xyz - p.xyz);
+    return p;
+}
+
 DataForFragmentShader VertexProgram(DataFromVertex input)
 {
-
     DataForFragmentShader output;
     float4 p = input.vertex;
-    float3 VPoint = (0, 0, 0);
-    float w = _OCWeight;
+    float w;
 
     if (FLAG_IS_ON(OC_ANIMATED))   
         w = 0.5 * (1 + _SinTime.z);
-                    
-    if (FLAG_IS_ON(OC_USE_VPOINT)) 
-        VPoint = _OCVPoint;
+    else
+        w = _OCWeight;
+
     
-    p.xyz += w * (VPoint - p.xyz);
+    if (FLAG_IS_ON(OC_USE_VPOINT)) 
+        p = transVert(p, _OCVPoint, w);         // Move vertices to OCVPoint in OC
+    else
+        p = transVert(p, float3(0, 0, 0), w);   // Move vertices to (0, 0, 0) in OC
 
-    p = mul(unity_ObjectToWorld, p); // objcet to world
-    p = mul(UNITY_MATRIX_V, p); // To eye space
-    p = mul(UNITY_MATRIX_P, p); // Projection 
-
+    
+    p = mul(unity_ObjectToWorld, p);            // Transform: To world
+    p = mul(UNITY_MATRIX_V, p);                 // Transform: To eye space
+    p = mul(UNITY_MATRIX_P, p);                 // Transform: To perspective
     output.vertex = p;
-
     return output;
 }
 

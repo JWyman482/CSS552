@@ -10,30 +10,52 @@ float3 _OCVPoint;
 float3 _PCVPoint;
 float _PCWeight;
 
+float4 transVert(float4 p, float3 VPoint, float w)
+{
+    p.xyz += w * (VPoint.xyz - p.xyz);
+    return p;
+}
+
 DataForFragmentShader VertexProgram(DataFromVertex input)
 {
     DataForFragmentShader output;
     float4 p = input.vertex;
-    float4 VPoint = float4(_PCVPoint, 1);
-    float w = _PCWeight;
+    float w;
     
-    p = mul(unity_ObjectToWorld, p); // objcet to world
-    p = mul(UNITY_MATRIX_V, p); // To eye space
-    p = mul(UNITY_MATRIX_P, p); // Projection 
-
     if (FLAG_IS_ON(PC_ANIMATED))
         w = 0.5 * (1 + _SinTime.y);
+    else
+        w = _PCWeight;
     
     if (FLAG_IS_ON(PC_USE_OCVPOINT))
-        VPoint = float4(_OCVPoint, 1);
-    
+    {
+        p = transVert(p, _OCVPoint, w);     // Move the vertices
+        p = mul(unity_ObjectToWorld, p);    // Transform: To world
+        p = mul(UNITY_MATRIX_V, p);         // Transform: To eye space
+        p = mul(UNITY_MATRIX_P, p);         // Transform: To perspective
+
+    }
+
+    // OC flag takes precedent
     if (FLAG_IS_ON(PC_USE_WCVPOINT) && !FLAG_IS_ON(PC_USE_OCVPOINT))
-        VPoint = float4(_WCVPoint, 1);
-    
-    p.xyz /= p.w;
-    p.xyz += w * (VPoint - p);
-    p.xyz *= p.w;
-    
+    {
+        p = mul(unity_ObjectToWorld, p);    // Transform: To world
+        p = transVert(p, _WCVPoint, w);     // Move the vertices
+        p = mul(UNITY_MATRIX_V, p);         // Transform: To eye space
+        p = mul(UNITY_MATRIX_P, p);         // Transform: To perspective
+    }
+
+    if (!FLAG_IS_ON(PC_USE_WCVPOINT) && !FLAG_IS_ON(PC_USE_OCVPOINT))
+    {
+        p = mul(unity_ObjectToWorld, p);    // Transform: To world
+        p = mul(UNITY_MATRIX_V, p);         // Transform: To eye space
+        p = mul(UNITY_MATRIX_P, p);         // Transform: To perspective
+
+        p.xyz /= p.w;
+        p = transVert(p, _PCVPoint, w);     // Move the vertices
+        p.xyz *= p.w;
+    }
+        
     output.vertex = p;
     return output;
 }
