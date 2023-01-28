@@ -20,7 +20,6 @@ DataForFragmentShader VertexProgram(DataFromVertex input)
         w = 0.5 * (1 + _SinTime.z);
                     
     if (FLAG_IS_ON(OC_USE_VPOINT)) 
-        //VPoint = float4(_OCVPoint, 1);
         VPoint = _OCVPoint;
     
     p.xyz += w * (VPoint - p.xyz);

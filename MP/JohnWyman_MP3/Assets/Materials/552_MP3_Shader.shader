@@ -3,12 +3,12 @@ Shader "552_Shaders/552_MP3_Shader"
     // https://docs.unity3d.com/Manual/SL-Properties.html
     Properties
     {
-       // world space 
-        _UserControl("User Control", Integer) = 0  // 1 is user control 
+        // world space 
+         _UserControl("User Control", Integer) = 0  // 1 is user control 
 
-        // Object Space
-        _OCWeight("OC Weight", float) = 1
-        _OCVPoint("OC Vanishing Pt", Vector) = (0, 0, 0)
+         // Object Space
+         _OCWeight("OC Weight", float) = 1
+         _OCVPoint("OC Vanishing Pt", Vector) = (0, 0, 0)
 
         // World space control
         _WCWeight("WC Weight", float) = 1  // 
@@ -23,7 +23,7 @@ Shader "552_Shaders/552_MP3_Shader"
         // Projected Coordinate control
         _PCWeight("PC Weight", float) = 1
         _PCVPoint("PC Vanishing Pt", Vector) = (0, 0, 0)
-        
+
 
         _Color("Color", Color) = (0.8, 0.8, 1, 1)
     }

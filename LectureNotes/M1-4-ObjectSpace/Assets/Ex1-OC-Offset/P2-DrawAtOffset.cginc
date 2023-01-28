@@ -23,10 +23,11 @@ v2f vert (appdata v)
     v2f o;
     float4 p;
     p = v.vertex;  // this is position in object space
-    p.xyz += _Offset;
+    p.xyz += _SinTime.z * (_Offset - p.xyz);
 
-    if (_ShowInOC == 0)  // show in WC
-        p = mul(unity_ObjectToWorld, p);  // objcet to world
+    if (_ShowInOC == 1)  // show in WC
+        p = mul(unity_ObjectToWorld, p); // objcet to world
+    
     p = mul(UNITY_MATRIX_V, p);  // To view space
     p = mul(UNITY_MATRIX_P, p);  // to Projection 
     o.vertex = p;
