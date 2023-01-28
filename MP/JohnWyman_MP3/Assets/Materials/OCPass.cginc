@@ -19,18 +19,17 @@ DataForFragmentShader VertexProgram(DataFromVertex input)
     DataForFragmentShader output;
     float4 p = input.vertex;
     float w;
+    float3 VPoint = float3(0, 0, 0);
 
     if (FLAG_IS_ON(OC_ANIMATED))   
         w = 0.5 * (1 + _SinTime.z);
     else
         w = _OCWeight;
 
-    
     if (FLAG_IS_ON(OC_USE_VPOINT)) 
-        p = transVert(p, _OCVPoint, w);         // Move vertices to OCVPoint in OC
-    else
-        p = transVert(p, float3(0, 0, 0), w);   // Move vertices to (0, 0, 0) in OC
+        VPoint = _OCVPoint;
 
+    p = transVert(p, VPoint, w);                // Move vertices to OCVPoint in OC
     
     p = mul(unity_ObjectToWorld, p);            // Transform: To world
     p = mul(UNITY_MATRIX_V, p);                 // Transform: To eye space

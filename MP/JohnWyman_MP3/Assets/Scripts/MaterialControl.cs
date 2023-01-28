@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class MaterialControl : MonoBehaviour
 {
-    // must agree with Structs.cginc constants
-    // OC flags
+// must agree with Structs.cginc constants
+// OC flags
     const uint OC_SHOW          = 0x01;
     const uint OC_ANIMATED      = 0x02;
     const uint OC_USE_VPOINT    = 0x04;
@@ -30,45 +30,16 @@ public class MaterialControl : MonoBehaviour
 
     public Material mMat = null; // 
     public bool ShowOriginal = true; // to see OC vanish, need to hide original
-
-    // Object Coordinate (OC) Space
-    public float OC_Weight = 1f;
-    public bool OC_Show = false;
-    public bool OC_Animated = false;
-    public bool OC_UseVPoint = false;
-    public Vector3 OC_VPoint = Vector3.zero;
-    
-    
-    // World Coordinate (WC) Space
-    public float WC_Weight = 1f;
-    public bool WC_Show = false;
-    public bool WC_Animated = false;
-    public float WC_Rate = 1f;
-    public bool WC_UseOCVPoint = false;
-    public Transform WC_VPoint = null;        
-    
-    
-    // Eye Coordinate (EC) space
-    public float EC_Weight = 1f;
-    public bool EC_Show = false;
-    public bool EC_Animated = false;
-    public bool EC_UseOCVPoint = false;
-    public bool EC_UseWCVPoint = false;
-    public bool EC_OnlyZ = false;
-    // public Camera EC_Near = null; // for keeping track of near plane  
-
-    // Perspective Coordinate (PC) Space
-    public float PC_Weight = 1f;
-    public bool PC_Show = false;
-    public bool PC_Animated = false;
-    public Vector3 PC_VPoint = Vector3.zero;
-    public bool PC_UseOCVPoint = false;
-    public bool PC_UseWCVPoint = false;
-    
     public Color ObjColor = Color.gray;
 
+    [Header("Flags")]
+    public OCFlags OC;
+    public WCFlags WC;
+    public ECFlags EC;
+    public PCFlags PC;
+
     void Start() {
-        Debug.Assert(WC_VPoint != null);
+        Debug.Assert(WC.VPoint != null);
 
         if (mMat == null) {  // not set in the UI
             mMat = GetComponent<Renderer>().material;  
@@ -79,23 +50,25 @@ public class MaterialControl : MonoBehaviour
     void Update() {
         // Control flag update
         mMat.SetInteger("_UserControl", (int) UpdateControlFlag());
+        if (EC.OccludeObject != null)
+            EC.OccludeObject.SetActive(EC.ShowOccludeObject);
 
         // OC
-        mMat.SetFloat("_OCWeight", OC_Weight);
-        mMat.SetVector("_OCVPoint", OC_VPoint);
+        mMat.SetFloat("_OCWeight", OC.Weight);
+        mMat.SetVector("_OCVPoint", OC.OCVPoint);
 
         // World space control
-        mMat.SetFloat("_WCWeight", WC_Weight);
-        mMat.SetFloat("_WCRate", WC_Rate);
-        mMat.SetVector("_WCVPoint", WC_VPoint.localPosition);
+        mMat.SetFloat("_WCWeight", WC.Weight);
+        mMat.SetFloat("_WCRate", WC.Rate);
+        mMat.SetVector("_WCVPoint", WC.VPoint.localPosition);
 
         // Eye Coordinate control
         mMat.SetFloat("_ECNear", Camera.main.nearClipPlane);
-        mMat.SetFloat("_ECWeight", EC_Weight);
+        mMat.SetFloat("_ECWeight", EC.Weight);
 
         // Projected Coordinate control
-        mMat.SetFloat("_PCWeight", PC_Weight);
-        mMat.SetVector("_PCVPoint", PC_VPoint);
+        mMat.SetFloat("_PCWeight", PC.Weight);
+        mMat.SetVector("_PCVPoint", PC.VPoint);
     
         mMat.SetColor("_Color", ObjColor);
     }
@@ -105,28 +78,70 @@ public class MaterialControl : MonoBehaviour
         if (ShowOriginal) f |= SHOW_ORIGINAL;
 
         // OC Flags
-        if (OC_Show) f |= OC_SHOW;
-        if (OC_Animated) f |= OC_ANIMATED;
-        if (OC_UseVPoint) f |= OC_USE_VPOINT;
+        if (OC.Show) f |= OC_SHOW;
+        if (OC.Animate) f |= OC_ANIMATED;
+        if (OC.UseOCVPoint) f |= OC_USE_VPOINT;
 
         // WC Flags
-        if (WC_Show) f |= WC_SHOW;
-        if (WC_Animated) f |= WC_ANIMATED;
-        if (WC_UseOCVPoint) f |= WC_USE_OCVPOINT;
+        if (WC.Show) f |= WC_SHOW;
+        if (WC.Animate) f |= WC_ANIMATED;
+        if (WC.UseOCVPoint) f |= WC_USE_OCVPOINT;
 
         // EC Flags
-        if (EC_Show) f |= EC_SHOW;
-        if (EC_Animated) f |= EC_ANIMATED;
-        if (EC_UseOCVPoint) f |= EC_USE_OCVPOINT;
-        if (EC_UseWCVPoint) f |= EC_USE_WCVPOINT;
-        if (EC_OnlyZ) f |= EC_ONLY_Z;
+        if (EC.Show) f |= EC_SHOW;
+        if (EC.Animate) f |= EC_ANIMATED;
+        if (EC.UseOCVPoint) f |= EC_USE_OCVPOINT;
+        if (EC.UseWCVPoint) f |= EC_USE_WCVPOINT;
+        if (EC.OnlyZ) f |= EC_ONLY_Z;
 
         // PC Flags
-        if (PC_Show) f |= PC_SHOW;
-        if (PC_Animated) f |= PC_ANIMATED;
-        if (PC_UseOCVPoint) f |= PC_USE_OCVPOINT;
-        if (PC_UseWCVPoint) f |= PC_USE_WCVPOINT;
+        if (PC.Show) f |= PC_SHOW;
+        if (PC.Animate) f |= PC_ANIMATED;
+        if (PC.UseOCVPoint) f |= PC_USE_OCVPOINT;
+        if (PC.UseWCVPoint) f |= PC_USE_WCVPOINT;
 
         return f;
     }
+};
+
+public class Flags
+{
+    public float Weight = 1f;
+    public bool Show = false;
+    public bool Animate = false;
+    public bool UseOCVPoint = false;
+};
+
+[System.Serializable]
+public class OCFlags : Flags
+{
+    // Object Coordinate (OC) Space
+    public Vector3 OCVPoint = Vector3.zero;
+};
+
+[System.Serializable]
+public class WCFlags : Flags
+{
+    // World Coordinate (WC) Space
+    public float Rate = 1f;
+    public Transform VPoint = null;
+};
+
+[System.Serializable]
+public class ECFlags : Flags
+{
+    // Eye Coordinate (EC) space
+    public bool UseWCVPoint = false;
+    public bool OnlyZ = false;
+    public GameObject OccludeObject = null;
+    public bool ShowOccludeObject = false;
+    // public Camera EC_Near = null; // for keeping track of near plane  
+};
+
+[System.Serializable]
+public class PCFlags : Flags
+{
+    // Perspective Coordinate (PC) Space
+    public Vector3 VPoint = Vector3.zero;
+    public bool UseWCVPoint = false;
 };
