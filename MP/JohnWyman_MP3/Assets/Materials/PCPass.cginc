@@ -10,52 +10,41 @@ float3 _OCVPoint;
 float3 _PCVPoint;
 float _PCWeight;
 
-float4 transVert(float4 p, float3 VPoint, float w)
-{
-    float4 target = float4(VPoint, 1);
-    p.xyz += w * (target - p);
-    return p;
-}
-
 DataForFragmentShader VertexProgram(DataFromVertex input)
 {
     DataForFragmentShader output;
     float4 p = input.vertex;
-    float w;
+    float w = _PCWeight;
+    float4 VPoint = float4(_PCVPoint, 1);
+    
+    p = mul(unity_ObjectToWorld, p);                // Transform vertex to world
+    p = mul(UNITY_MATRIX_V, p);                     // Transform vertex to eye space
+    p = mul(UNITY_MATRIX_P, p);                     // Transform vertex to perspective
     
     if (FLAG_IS_ON(PC_ANIMATED))
         w = 0.5 * (1 + _SinTime.y);
-    else
-        w = _PCWeight;
     
     if (FLAG_IS_ON(PC_USE_OCVPOINT))
     {
-        p = transVert(p, _OCVPoint, w);     // Move the vertices
-        p = mul(unity_ObjectToWorld, p);    // Transform: To world
-        p = mul(UNITY_MATRIX_V, p);         // Transform: To eye space
-        p = mul(UNITY_MATRIX_P, p);         // Transform: To perspective
+        VPoint = float4(_OCVPoint, 1);              // Set vanishing point to OCVPoint
+        VPoint = mul(unity_ObjectToWorld, VPoint);  // Transform vanishing point from object to world
+        VPoint = mul(UNITY_MATRIX_V, VPoint);       // Transform vanishing point from world to eye space
+        VPoint = mul(UNITY_MATRIX_P, VPoint);       // Transform vanishing point from eye to perspective
     }
 
     // OC flag takes precedent
     if (FLAG_IS_ON(PC_USE_WCVPOINT) && !FLAG_IS_ON(PC_USE_OCVPOINT))
     {
-        p = mul(unity_ObjectToWorld, p);    // Transform: To world
-        p = transVert(p, _WCVPoint, w);     // Move the vertices
-        p = mul(UNITY_MATRIX_V, p);         // Transform: To eye space
-        p = mul(UNITY_MATRIX_P, p);         // Transform: To perspective
+        VPoint = float4(_WCVPoint, 1);              // Set vanishing point to WCVPoint
+        VPoint = mul(UNITY_MATRIX_V, VPoint);       // Transform vanishing point from world to eye space
+        VPoint = mul(UNITY_MATRIX_P, VPoint);       // Transform vanishing point from eye to perspective        
     }
-
-    if (!FLAG_IS_ON(PC_USE_WCVPOINT) && !FLAG_IS_ON(PC_USE_OCVPOINT))
-    {
-        p = mul(unity_ObjectToWorld, p);    // Transform: To world
-        p = mul(UNITY_MATRIX_V, p);         // Transform: To eye space
-        p = mul(UNITY_MATRIX_P, p);         // Transform: To perspective
-
-        p.xyz /= p.w;
-        p = transVert(p, _PCVPoint, w);     // Move the vertices
-        p.xyz *= p.w;
-    }
-        
+    
+    VPoint /= VPoint.w;
+    p.xyz /= p.w;
+    p.xyz += w * (VPoint - p);
+    p.xyz *= p.w;
+    
     output.vertex = p;
     return output;
 }

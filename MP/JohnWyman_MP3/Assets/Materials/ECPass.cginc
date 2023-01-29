@@ -10,50 +10,39 @@ float3 _OCVPoint;
 float _ECWeight;
 float _ECNear;
 
-float4 transVert(float4 p, float3 VPoint, float w) {
-    float4 target = float4(VPoint, 1);
-        
-    if (FLAG_IS_ON(EC_ONLY_Z))
-        p.z += w * (target.z - p.z);
-    else
-        p.xyz += w * (target - p);
-    return p;
-}
 
 DataForFragmentShader VertexProgram(DataFromVertex input)
 {
     DataForFragmentShader output;
     float4 p = input.vertex;
-    float w;
+    float w = _ECWeight;
+    float4 VPoint = float4(0, 0, -_ECNear, 1);
+
+    p = mul(unity_ObjectToWorld, p);                // Transform vertex to world
+    p = mul(UNITY_MATRIX_V, p);                     // Transform vertex to eye space
     
     if (FLAG_IS_ON(EC_ANIMATED))
         w = 0.5 * (1 + _CosTime.z);
-    else
-        w = _ECWeight;
     
     if (FLAG_IS_ON(EC_USE_OCVPOINT))
     {
-        p = transVert(p, _OCVPoint, w);             // Move vertices to OCVPoint in OC
-        p = mul(unity_ObjectToWorld, p);            // Transform: To world
-        p = mul(UNITY_MATRIX_V, p);                 // Transform: To eye space
+        VPoint = float4(_OCVPoint, 1);              // Set vanishing point to OCVPoint
+        VPoint = mul(unity_ObjectToWorld, VPoint);  // Transform vanishing point from object to world
+        VPoint = mul(UNITY_MATRIX_V, VPoint);       // Transform vanishing point from world to eye space
     }
-
-    // OC flag takes precedent
+    
     if (FLAG_IS_ON(EC_USE_WCVPOINT) && !FLAG_IS_ON(EC_USE_OCVPOINT))
     {
-        p = mul(unity_ObjectToWorld, p);            // Transform: To world
-        p = transVert(p, _WCVPoint, w);             // Move vertices to WCVPoint in WC
-        p = mul(UNITY_MATRIX_V, p);                 // Transform: To eye space
+        VPoint = float4(_WCVPoint, 1);              // Set vanishing point to WCVPoint
+        VPoint = mul(UNITY_MATRIX_V, VPoint);       // Transform vanishing point from world to eye space
     }
-
-    if (!FLAG_IS_ON(EC_USE_WCVPOINT) && !FLAG_IS_ON(EC_USE_OCVPOINT))
-    {
-        p = mul(unity_ObjectToWorld, p);            // Transform: To world
-        p = mul(UNITY_MATRIX_V, p);                 // Transform: To eye space
-        p = transVert(p, float3(0, 0, -_ECNear), w);// Move vertices to center of camera in EC
-    }
-   
-    p = mul(UNITY_MATRIX_P, p);                     // Transform: To perspective
+    
+    if (FLAG_IS_ON(EC_ONLY_Z))
+        p.z += w * (VPoint.z - p.z);
+    else
+        p.xyz += w * (VPoint - p);
+    
+    p = mul(UNITY_MATRIX_P, p);                     // Transform vertex to perspective
     output.vertex = p;
     return output;
 }

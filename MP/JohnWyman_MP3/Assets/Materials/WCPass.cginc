@@ -12,10 +12,9 @@ float _WCWeight;
 float _WCRate;
 int _Test;
 
-float4 transVert(float4 p, float3 VPoint, float w)
+float4 transVert(float4 p, float4 VPoint, float w)
 {
-    float4 target = float4(VPoint, 1);
-    p.xyz += w * (target - p);
+    p.xyz += w * (VPoint - p);
     return p;
 }
 
@@ -24,6 +23,9 @@ DataForFragmentShader VertexProgram(DataFromVertex input)
     DataForFragmentShader output;
     float4 p = input.vertex;
     float w;
+    float4 VPoint = float4(_WCVPoint, 1);
+
+    p = mul(unity_ObjectToWorld, p);
     
     if (FLAG_IS_ON(WC_ANIMATED))
         w = pow(abs(_SinTime.z), _WCRate);
@@ -32,14 +34,11 @@ DataForFragmentShader VertexProgram(DataFromVertex input)
     
     if (FLAG_IS_ON(WC_USE_OCVPOINT))
     {
-        p = transVert(p, _OCVPoint, w);     // Move vertices - in OC
-        p = mul(unity_ObjectToWorld, p);    // Transform: To world
+        VPoint = float4(_OCVPoint, 1);
+        VPoint = mul(unity_ObjectToWorld, VPoint);
     }
-    else
-    {
-        p = mul(unity_ObjectToWorld, p);    // Transform: To world
-        p = transVert(p, _WCVPoint, w);     // Move vertices - in WC
-    }
+    
+    p.xyz += w * (VPoint - p);
     
     p = mul(UNITY_MATRIX_V, p);             // Transform: To eye space
     p = mul(UNITY_MATRIX_P, p);             // Transform: To perspective

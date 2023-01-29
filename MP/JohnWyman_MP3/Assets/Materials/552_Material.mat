@@ -21,17 +21,17 @@ Material:
     serializedVersion: 3
     m_TexEnvs: []
     m_Ints:
-    - _UserControl: 1048576
+    - _UserControl: 45703
     m_Floats:
     - _ECNear: 0.3
     - _ECWeight: 1
     - _OCWeight: 1
-    - _PCWeight: 1
+    - _PCWeight: 0.14
     - _WCRate: 1
     - _WCWeight: 1
     m_Colors:
     - _Color: {r: 0.5, g: 0.5, b: 0.5, a: 1}
-    - _OCVPoint: {r: 0, g: 0, b: 0, a: 0}
-    - _PCVPoint: {r: 0, g: 0, b: 0, a: 0}
+    - _OCVPoint: {r: 4, g: 0, b: 0, a: 0}
+    - _PCVPoint: {r: 0.5, g: 0.5, b: 0, a: 0}
     - _WCVPoint: {r: 5, g: -5, b: 6.94, a: 0}
   m_BuildTextureStacks: []
