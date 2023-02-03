@@ -33,6 +33,6 @@ Material:
     - _Blend: 0.56
     m_Colors:
     - _Color: {r: 0.5, g: 0.5, b: 0.5, a: 1}
-    - _Kd: {r: 0.18022428, g: 0.4716981, b: 0.30803525, a: 1}
+    - _Kd: {r: 1, g: 1, b: 1, a: 1}
     - _LightPos: {r: 0, g: 14.2, b: 0, a: 1}
   m_BuildTextureStacks: []
