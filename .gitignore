@@ -63,6 +63,11 @@ crashlytics-build.properties
 
 # temp work to be deleted
 ToDelete/
+<<<<<<< HEAD
 *.zipf
 MP/My Project/
 *.dwlt
+=======
+*.zip
+MP/My Project/
+>>>>>>> b6ce27d5b1936d770583c1e23aeb268a87443468
