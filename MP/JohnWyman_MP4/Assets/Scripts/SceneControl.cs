@@ -14,22 +14,61 @@ public class SceneControl : MonoBehaviour
     
     private static int kNumLights = 4; // must be identical to the M2_Shader
 
+    public bool UseTexture = true;
+    public bool AddAmbient = false;
+    public bool AddDiffuse = false;
+    // public bool AddSpecular = false;
+    // public bool AddDistanceAtten = false;
+    // public bool AddAngularAtten = false;
+
     public LightSource[] Lights;
-    LightsLoader mLgtLoader = new LightsLoader();
+
+    LightsLoader mLgtLoader = new LightsLoader(); // initializes lightstate to 0.0f
     
+    Vector4[] LightPosBuffer; // for sending light position to the shader
+    float[] LightStateBuffer; 
+    Vector4[] LightColorBuffer;
+
     void Start()
     {        
+        Debug.Assert(Lights != null);
+
+        LightPosBuffer = new Vector4[Lights.Length];
+        LightStateBuffer = new float[Lights.Length];
+        LightColorBuffer = new Vector4[Lights.Length];      
     }
 
 
     // Update is called once per frame
     void Update()
     {
+        // Bitmask/Flags
+        int flag = 0x0;
+        if (UseTexture) flag |= kUseTexture;
+        if (AddAmbient) flag |= kCompAmbient;
+        if (AddDiffuse) flag |= kCompDiffuse;
+        // if (AddSpecular) flag |= kCompSpecular;
+        // if (AddDistAtten) flag |= kCompDistAtten;
+        // if (AddAngularAtten) flag |= kCompAngularAtten;
+
+
+        Shader.SetGlobalInteger("_ShaderMode", flag);
+
         // Sets per-scene information
         // Lights
         // Current Camera position
         // Mode: on what is on and off
         // Hint: Set by calling
         //    Shader.SetGlobal ...   
+
+        for (int lgtIndex = 0; lgtIndex < Lights.Length; lgtIndex++) 
+        {
+            // LightSourceSetLoader takes the lightsource and grabs
+            // the state/color/pos right off the source.
+            // Debug.Log(Lights[lgtIndex].transform.localPosition);
+            mLgtLoader.LightSourceSetLoader(lgtIndex, Lights[lgtIndex]);
+        }
+
+        mLgtLoader.LoadLightsToShader();
     }
 }

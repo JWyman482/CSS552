@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.1273174, g: 0.13414761, b: 0.12107885, a: 1}
+  m_IndirectSpecularColor: {r: 0.12731704, g: 0.13414727, b: 0.121078536, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -152,6 +152,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c27ebd206b466c40b3a25016d090589, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  col: {r: 1, g: 1, b: 1, a: 1}
   LightIsOn: 0
   LightState: 2
   Near: 55
@@ -648,6 +649,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c27ebd206b466c40b3a25016d090589, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  col: {r: 1, g: 1, b: 1, a: 1}
   LightIsOn: 0
   LightState: 2
   Near: 55
@@ -699,6 +701,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c27ebd206b466c40b3a25016d090589, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  col: {r: 1, g: 1, b: 1, a: 1}
   LightIsOn: 1
   LightState: 3
   Near: 55
@@ -975,6 +978,7 @@ GameObject:
   - component: {fileID: 963194228}
   - component: {fileID: 963194227}
   - component: {fileID: 963194226}
+  - component: {fileID: 963194229}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1048,6 +1052,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &963194229
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 963194225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 112f3c3d932f0754fb20c1c06df527a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LookAt: {fileID: 1107777053}
+  DrawFrustum: 0
 --- !u!1 &1107777046 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 100000, guid: 354198794248843da8555877937ee568, type: 3}
@@ -1067,6 +1085,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Ka: 0.2
   Ambient: {r: 0.09803922, g: 0.09803922, b: 0.09803922, a: 1}
+--- !u!4 &1107777053 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 400000, guid: 354198794248843da8555877937ee568, type: 3}
+  m_PrefabInstance: {fileID: 447696615}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1420654389
 GameObject:
   m_ObjectHideFlags: 0
@@ -1111,6 +1134,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c27ebd206b466c40b3a25016d090589, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  col: {r: 1, g: 1, b: 1, a: 1}
   LightIsOn: 1
   LightState: 1
   Near: 55
@@ -1429,6 +1453,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9eef95e374912bb4ea27c7619b7ac2da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  UseTexture: 1
+  AddAmbient: 0
+  AddDiffuse: 0
   Lights:
   - {fileID: 1420654392}
   - {fileID: 703885692}

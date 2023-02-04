@@ -11,6 +11,7 @@ public class LightSource : MonoBehaviour
         eLightSpot = 3  // not supported here
     };
 
+    public Color col = Color.white;
     public bool LightIsOn = true;
     public LightStateEnum LightState = LightStateEnum.eLightDirectional;
     public float Near = 55.0f;
