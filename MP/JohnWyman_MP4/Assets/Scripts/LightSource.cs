@@ -11,11 +11,6 @@ public class LightSource : MonoBehaviour
         eLightSpot = 3  // not supported here
     };
 
-    // ******* MODIFIED FOR ASSIGNMENT
-    public Color LightColor = Color.white;
-    Material MyMat = null;
-    // *******
-
     public bool LightIsOn = true;
     public LightStateEnum LightState = LightStateEnum.eLightDirectional;
     public float Near = 55.0f;
@@ -33,8 +28,6 @@ public class LightSource : MonoBehaviour
     
     void Start()
     {
-        MyMat = GetComponent<Renderer>().material;                  // MODIFIED FOR ASSIGNMENT
-
         mNearSph = GameObject.CreatePrimitive(PrimitiveType.Sphere);
         mFarSph =  GameObject.CreatePrimitive(PrimitiveType.Sphere);
         mNearSph.GetComponent<MeshRenderer>().material = Resources.Load<Material>("Mat/Default_Transparent");
@@ -71,51 +64,42 @@ public class LightSource : MonoBehaviour
         mInner.SetActive(LightIsOn && false);
         mOuter.SetActive(LightIsOn && false);
         mDirection.gameObject.SetActive(LightIsOn && false);
-        if (LightIsOn)
-        {
-            MyMat.SetColor("_Color", LightColor);
-            if (ShowDebug)
-            {
 
-                if ((LightState == LightStateEnum.eLightPoint) || (LightState == LightStateEnum.eLightSpot))
-                {
-                    mNearSph.SetActive(true);
-                    mFarSph.SetActive(true);
+        if (LightIsOn && ShowDebug) {
 
-                    // mNearSph.transform.localPosition = transform.localPosition;
-                    float r = 2.0f * Near;
-                    mNearSph.transform.localScale = new Vector3(r, r, r);
+            if ((LightState == LightStateEnum.eLightPoint) || (LightState == LightStateEnum.eLightSpot)) {
+                mNearSph.SetActive(true);
+                mFarSph.SetActive(true);
 
-                    // mFarSph.transform.localPosition = transform.localPosition;
-                    r = 2.0f * Far;
-                    mFarSph.transform.localScale = new Vector3(r, r, r);
-                }
+                // mNearSph.transform.localPosition = transform.localPosition;
+                float r = 2.0f * Near;
+                mNearSph.transform.localScale = new Vector3(r, r, r);
 
-                if ((LightState == LightStateEnum.eLightDirectional) || (LightState == LightStateEnum.eLightSpot))
-                {
-                    mDirection.gameObject.SetActive(true);
-                    // mDirection.SetEndPoints(transform.localPosition, transform.localPosition - Far * transform.up);
-                    mDirection.SetEndPoints(Vector3.zero, -Far * Vector3.up);
-                }
-
-                if (LightState == LightStateEnum.eLightSpot)
-                {
-                    mInner.SetActive(true);
-                    mOuter.SetActive(true);
-                    float sizeAtNear = Near * Mathf.Tan(SpotInner * Mathf.Deg2Rad);
-                    // mInner.transform.localPosition = transform.localPosition - Near * 0.5f * transform.up;
-                    mInner.transform.localPosition = -Near * Vector3.up;
-                    mInner.transform.localScale = new Vector3(sizeAtNear, kIndicationThickness, sizeAtNear);
-
-                    float sizeAtFar = Far * Mathf.Tan(SpotOuter * Mathf.Deg2Rad);
-                    // mOuter.transform.localPosition = transform.localPosition - Far * 0.5f * transform.up;
-                    mOuter.transform.localPosition = -Far * Vector3.up;
-                    mOuter.transform.localScale = new Vector3(sizeAtFar, kIndicationThickness, sizeAtFar);
-                }
-
+                // mFarSph.transform.localPosition = transform.localPosition;
+                r = 2.0f * Far; 
+                mFarSph.transform.localScale = new Vector3(r, r, r);
             }
+
+            if ((LightState == LightStateEnum.eLightDirectional) || (LightState == LightStateEnum.eLightSpot)) {
+                mDirection.gameObject.SetActive(true);
+                // mDirection.SetEndPoints(transform.localPosition, transform.localPosition - Far * transform.up);
+                mDirection.SetEndPoints(Vector3.zero, -Far * Vector3.up);
+            }
+
+            if (LightState == LightStateEnum.eLightSpot) {
+                mInner.SetActive(true);
+                mOuter.SetActive(true);
+                float sizeAtNear = Near * Mathf.Tan(SpotInner*Mathf.Deg2Rad);
+                // mInner.transform.localPosition = transform.localPosition - Near * 0.5f * transform.up;
+                mInner.transform.localPosition = -Near * Vector3.up;
+                mInner.transform.localScale = new Vector3(sizeAtNear, kIndicationThickness, sizeAtNear);
+
+                float sizeAtFar = Far * Mathf.Tan(SpotOuter*Mathf.Deg2Rad);
+                // mOuter.transform.localPosition = transform.localPosition - Far * 0.5f * transform.up;
+                mOuter.transform.localPosition = -Far * Vector3.up;
+                mOuter.transform.localScale = new Vector3(sizeAtFar, kIndicationThickness, sizeAtFar);
+            }
+
         }
-        else
-            MyMat.SetColor("_Color", Color.black);
     }
 }

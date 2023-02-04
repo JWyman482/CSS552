@@ -16,21 +16,9 @@ public class SceneControl : MonoBehaviour
 
     public LightSource[] Lights;
     LightsLoader mLgtLoader = new LightsLoader();
-
-    float[] LightSwitchBuffer; // for sending light on/off switch to the shader
-    Vector4[] LightPosBuffer; // for sending light position to the shader
-    Vector4[] LightColorBuffer;
-
-    [Header("User Controls")]
-    public bool ShowTexture = true;
     
     void Start()
-    {
-        Debug.Assert(Lights != null);
-
-        LightPosBuffer = new Vector4[Lights.Length];
-        LightSwitchBuffer = new float[Lights.Length];
-        LightColorBuffer = new Vector4[Lights.Length];
+    {        
     }
 
 
@@ -43,39 +31,5 @@ public class SceneControl : MonoBehaviour
         // Mode: on what is on and off
         // Hint: Set by calling
         //    Shader.SetGlobal ...   
-
-        // compute the global render flag
-        int flag = 0x0;
-        if (ShowTexture) flag |= kUseTexture;
-
-        // global shader update
-        Shader.SetGlobalInteger("_Flag", flag);
-
-        // On/Off Switch
-        for (int i = 0; i < Lights.Length; i++)
-            // copy from light source to the buffers
-            LightSwitchBuffer[i] = Lights[i].LightIsOn ? 1.0f : 0.0f;
-        Shader.SetGlobalFloatArray("_LightFlag", LightSwitchBuffer);
-
-        for (int i = 0; i < Lights.Length; i++)
-            LightColorBuffer[i] = Lights[i].LightColor;  // notice Color is also a Vector4
-        Shader.SetGlobalVectorArray("_LightColor", LightColorBuffer);
-
-        // Light position: show we can use the Editor Camera Position!
-        for (int i = 0; i < Lights.Length; i++)
-            LightPosBuffer[i] = Lights[i].transform.localPosition;
-
-        //switch (LightPosFrom)
-        //{
-        //    case EnumSelectLightPosition.eMainCameraPosition:
-        //        LightPosBuffer[0] = Camera.main.transform.localPosition;
-        //        break;
-        //    case EnumSelectLightPosition.eEditorCameraPosition:
-        //        LightPosBuffer[0] = SceneView.lastActiveSceneView.camera.transform.localPosition;
-        //        break;
-        //        // case EnumSelectLightPosition.ePointLightPosition: no need to do anything
-        //}
-        Shader.SetGlobalVectorArray("_LightPosition", LightPosBuffer);
-
     }
 }
