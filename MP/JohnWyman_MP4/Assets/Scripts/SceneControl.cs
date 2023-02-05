@@ -11,10 +11,10 @@ public class SceneControl : MonoBehaviour
     const int kCompSpecular = 8;
     const int kCompDistAtten = 16;
     const int kCompAngularAtten = 32;
-    
+
     private static int kNumLights = 4; // must be identical to the M2_Shader
 
-    public bool UseTexture = true;
+    public bool UseTexture = false;
     public bool AddAmbient = false;
     public bool AddDiffuse = false;
     // public bool AddSpecular = false;
@@ -24,18 +24,10 @@ public class SceneControl : MonoBehaviour
     public LightSource[] Lights;
 
     LightsLoader mLgtLoader = new LightsLoader(); // initializes lightstate to 0.0f
-    
-    Vector4[] LightPosBuffer; // for sending light position to the shader
-    float[] LightStateBuffer; 
-    Vector4[] LightColorBuffer;
 
     void Start()
-    {        
+    {
         Debug.Assert(Lights != null);
-
-        LightPosBuffer = new Vector4[Lights.Length];
-        LightStateBuffer = new float[Lights.Length];
-        LightColorBuffer = new Vector4[Lights.Length];      
     }
 
 

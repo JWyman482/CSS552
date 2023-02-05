@@ -4,7 +4,7 @@
 int _ShaderMode;
 static const int kTexture = 1;
 static const int kAmbient = 2;
-static const int kDiffuse = 4;
+static const int kDiffuse = 4; // 0100
 static const int kSpecular = 8;
 static const int kDistanceAtten = 16;
 static const int kAngularAtten = 32;

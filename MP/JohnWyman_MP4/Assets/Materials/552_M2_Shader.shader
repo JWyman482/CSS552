@@ -3,9 +3,9 @@ Shader "552_Shaders/552_M2_Shader"
     // https://docs.unity3d.com/Manual/SL-Properties.html
     Properties
     {
-        _MyTex ("MyText", 2D) = "white" {}
-        _Kd("Kd", Color) = (0.5, 0.5, 0.5, 1)
-        _Ka("Ka", Color) = (0.0, 0.0, 0.5, 1)
+        _MyTex ("MyTex", 2D) = "white" {}
+        _Ka("Ka", Color) = (0.5, 0.5, 0.5, 1)
+        _Kd("Kd", Color) = (1.0, 1.0, 1.0, 1)
     }
 
     SubShader
@@ -23,7 +23,6 @@ Shader "552_Shaders/552_M2_Shader"
             // located at: C:\Program Files\Unity\Hub\Editor\2021.3.10f1\Editor\Data\CGIncludes
             #include "UnityCG.cginc"
             #include "MyInclude/MyPhong.cginc"
-            #include "MyInclude/MyMaterial.cginc"
             #include "MyInclude/MyLights.cginc"
 
             struct DataFromVertex
@@ -43,7 +42,8 @@ Shader "552_Shaders/552_M2_Shader"
 
             sampler2D _MyTex;
             float4 _MyTex_ST;
-
+            float4 _Kd;
+            float4 _Ka;
 
             DataForFragmentShader VertexProgram(DataFromVertex input)
             {
@@ -74,20 +74,24 @@ Shader "552_Shaders/552_M2_Shader"
                 return r;
             }
 
-            float4 _Kd;
-            float4 _Ka;
             
             float4 FragmentProgram(DataForFragmentShader input) : SV_Target
             {
-                float4 col = float4(0, 0, 0, 1);
-                for (int lgt = 0; lgt < kNumLights; lgt++)
-                {
-                    col += ComputeDiffuse(lgt, input.normal, input.worldPt);
+                // Set Ambient Light
+                float4 col = float4(0.5, 0.5, 0.5, 1);
+                if (FlagIsOn(kAmbient)) col = _Ka;
+                
+                // Set Diffused Light
+                if (FlagIsOn(kDiffuse)) {
+                    col *= _Kd;
+                    for (int lgt = 0; lgt < kNumLights; lgt++)
+                    {
+                        col += ComputeDiffuse(lgt, input.normal, input.worldPt);
+                    }
                 }
 
-                if (FlagIsOn(kDiffuse)) col *= _Kd;
+                // Set Texture
                 if (FlagIsOn(kTexture)) col *= tex2D(_MyTex, input.uv);
-                if (FlagIsOn(kAmbient)) col += _Ka;
 
                 return col;
             }

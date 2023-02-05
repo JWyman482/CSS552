@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.12731704, g: 0.13414727, b: 0.121078536, a: 1}
+  m_IndirectSpecularColor: {r: 0.12731749, g: 0.13414757, b: 0.1210787, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -208,10 +208,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32dc32fe899fc5149b456a8fcb2bd706, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Ka: 0.2
-  Ambient: {r: 0.1, g: 0.1, b: 0.1, a: 1}
-  Kd: 0.2
-  Diffuse: {r: 0, g: 1, b: 0, a: 1}
+  AmbientIntensityKa: 0.2
+  AmbientColor: {r: 0.1, g: 0.1, b: 0.1, a: 1}
+  DiffuseIntensityKd: 0.2
+  DiffuseColor: {r: 1, g: 1, b: 1, a: 1}
   DiffuseTexture: {fileID: 0}
 --- !u!64 &200105722
 MeshCollider:
@@ -339,10 +339,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32dc32fe899fc5149b456a8fcb2bd706, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Ka: 0.2
-  Ambient: {r: 0.1, g: 0.1, b: 0.1, a: 1}
-  Kd: 0.2
-  Diffuse: {r: 0, g: 1, b: 0, a: 1}
+  AmbientIntensityKa: 0.2
+  AmbientColor: {r: 0.1, g: 0.1, b: 0.1, a: 1}
+  DiffuseIntensityKd: 0.2
+  DiffuseColor: {r: 1, g: 1, b: 1, a: 1}
   DiffuseTexture: {fileID: 0}
 --- !u!135 &326492676
 SphereCollider:
@@ -454,10 +454,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32dc32fe899fc5149b456a8fcb2bd706, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Ka: 0.2
-  Ambient: {r: 0.1, g: 0.1, b: 0.1, a: 1}
-  Kd: 0.2
-  Diffuse: {r: 0, g: 1, b: 0, a: 1}
+  AmbientIntensityKa: 0.2
+  AmbientColor: {r: 0.1, g: 0.1, b: 0.1, a: 1}
+  DiffuseIntensityKd: 0.2
+  DiffuseColor: {r: 1, g: 1, b: 1, a: 1}
   DiffuseTexture: {fileID: 0}
 --- !u!135 &396250760
 SphereCollider:
@@ -713,7 +713,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LightIsOn: 1
-  LightState: 3
+  LightState: 1
   LightColor: {r: 1, g: 1, b: 1, a: 1}
   Intensity: 1
   Near: 55
@@ -753,10 +753,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32dc32fe899fc5149b456a8fcb2bd706, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Ka: 0.2
-  Ambient: {r: 0.1, g: 0.1, b: 0.1, a: 1}
-  Kd: 0.2
-  Diffuse: {r: 0, g: 1, b: 0, a: 1}
+  AmbientIntensityKa: 0.2
+  AmbientColor: {r: 0.1, g: 0.1, b: 0.1, a: 1}
+  DiffuseIntensityKd: 0.2
+  DiffuseColor: {r: 1, g: 1, b: 1, a: 1}
   DiffuseTexture: {fileID: 0}
 --- !u!1 &854312865
 GameObject:
@@ -805,11 +805,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32dc32fe899fc5149b456a8fcb2bd706, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Ka: 0.2
-  Ambient: {r: 0.1, g: 0.1, b: 0.1, a: 1}
-  Kd: 0.2
-  Diffuse: {r: 0, g: 1, b: 0, a: 1}
-  DiffuseTexture: {fileID: 0}
+  AmbientIntensityKa: 0.2
+  AmbientColor: {r: 0.1, g: 0.1, b: 0.1, a: 1}
+  DiffuseIntensityKd: 0.2
+  DiffuseColor: {r: 1, g: 1, b: 1, a: 1}
+  DiffuseTexture: {fileID: 2800000, guid: dd562dfa1d8b00d4da6781c4969729da, type: 3}
 --- !u!135 &854312868
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -920,10 +920,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32dc32fe899fc5149b456a8fcb2bd706, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Ka: 0.2
-  Ambient: {r: 0.1, g: 0.1, b: 0.1, a: 1}
-  Kd: 0.2
-  Diffuse: {r: 0, g: 1, b: 0, a: 1}
+  AmbientIntensityKa: 0.2
+  AmbientColor: {r: 0.1, g: 0.1, b: 0.1, a: 1}
+  DiffuseIntensityKd: 0.2
+  DiffuseColor: {r: 1, g: 1, b: 1, a: 1}
   DiffuseTexture: {fileID: 0}
 --- !u!135 &921565085
 SphereCollider:
@@ -1104,10 +1104,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32dc32fe899fc5149b456a8fcb2bd706, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Ka: 0.2
-  Ambient: {r: 0.09803922, g: 0.09803922, b: 0.09803922, a: 1}
-  Kd: 0.2
-  Diffuse: {r: 0, g: 1, b: 0, a: 1}
+  AmbientIntensityKa: 0.2
+  AmbientColor: {r: 0.1, g: 0.1, b: 0.1, a: 1}
+  DiffuseIntensityKd: 0.2
+  DiffuseColor: {r: 1, g: 1, b: 1, a: 1}
   DiffuseTexture: {fileID: 0}
 --- !u!1 &1420654389
 GameObject:
@@ -1418,10 +1418,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32dc32fe899fc5149b456a8fcb2bd706, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Ka: 0.2
-  Ambient: {r: 0.1, g: 0.1, b: 0.1, a: 1}
-  Kd: 0.2
-  Diffuse: {r: 0, g: 1, b: 0, a: 1}
+  AmbientIntensityKa: 0.2
+  AmbientColor: {r: 0.1, g: 0.1, b: 0.1, a: 1}
+  DiffuseIntensityKd: 0.2
+  DiffuseColor: {r: 1, g: 1, b: 1, a: 1}
   DiffuseTexture: {fileID: 0}
 --- !u!1 &1822169734 stripped
 GameObject:
@@ -1445,10 +1445,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32dc32fe899fc5149b456a8fcb2bd706, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Ka: 0.2
-  Ambient: {r: 0.1, g: 0.1, b: 0.1, a: 1}
-  Kd: 0.2
-  Diffuse: {r: 0, g: 1, b: 0, a: 1}
+  AmbientIntensityKa: 0.2
+  AmbientColor: {r: 0.1, g: 0.1, b: 0.1, a: 1}
+  DiffuseIntensityKd: 0.2
+  DiffuseColor: {r: 1, g: 1, b: 1, a: 1}
   DiffuseTexture: {fileID: 0}
 --- !u!1 &1867474777
 GameObject:
@@ -1479,7 +1479,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9eef95e374912bb4ea27c7619b7ac2da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  UseTexture: 1
+  UseTexture: 0
   AddAmbient: 0
   AddDiffuse: 0
   Lights:
@@ -1616,8 +1616,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32dc32fe899fc5149b456a8fcb2bd706, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Ka: 0.2
-  Ambient: {r: 0.1, g: 0.1, b: 0.1, a: 1}
-  Kd: 0.2
-  Diffuse: {r: 0, g: 1, b: 0, a: 1}
+  AmbientIntensityKa: 0.2
+  AmbientColor: {r: 0.1, g: 0.1, b: 0.1, a: 1}
+  DiffuseIntensityKd: 0.2
+  DiffuseColor: {r: 1, g: 1, b: 1, a: 1}
   DiffuseTexture: {fileID: 0}
