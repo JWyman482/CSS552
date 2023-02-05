@@ -4,8 +4,10 @@ Shader "552_Shaders/552_M2_Shader"
     Properties
     {
         _MyTex ("MyText", 2D) = "white" {}
-        _Kd("Kd", Color) = (1, 1, 1, 1)
+        _Kd("Kd", Color) = (0.5, 0.5, 0.5, 1)
+        _Ka("Ka", Color) = (0.0, 0.0, 0.5, 1)
     }
+
     SubShader
     {
         Tags { "RenderType"="Opaque" }
@@ -41,8 +43,7 @@ Shader "552_Shaders/552_M2_Shader"
 
             sampler2D _MyTex;
             float4 _MyTex_ST;
-            float4 _Kd;
-            // float4 _Ka;
+
 
             DataForFragmentShader VertexProgram(DataFromVertex input)
             {
@@ -73,7 +74,9 @@ Shader "552_Shaders/552_M2_Shader"
                 return r;
             }
 
-
+            float4 _Kd;
+            float4 _Ka;
+            
             float4 FragmentProgram(DataForFragmentShader input) : SV_Target
             {
                 float4 col = float4(0, 0, 0, 1);
@@ -82,10 +85,9 @@ Shader "552_Shaders/552_M2_Shader"
                     col += ComputeDiffuse(lgt, input.normal, input.worldPt);
                 }
 
-                col *= _Kd;
-
-                if (FlagIsOn(kTexture))
-                    col *= tex2D(_MyTex, input.uv);
+                if (FlagIsOn(kDiffuse)) col *= _Kd;
+                if (FlagIsOn(kTexture)) col *= tex2D(_MyTex, input.uv);
+                if (FlagIsOn(kAmbient)) col += _Ka;
 
                 return col;
             }
