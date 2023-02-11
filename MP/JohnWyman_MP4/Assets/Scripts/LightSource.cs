@@ -14,11 +14,12 @@ public class LightSource : MonoBehaviour
     public bool LightIsOn = true;
     public LightStateEnum LightState = LightStateEnum.eLightDirectional;
     public Color LightColor = Color.white;
-    public float Intensity = 1.0f;
+    public float Intensity = 2.0f;
     public float Near = 55.0f;
     public float Far = 80.0f;
     public float SpotInner = 25.0f; // angle 
-    public float SpotOuter = 45.0f; 
+    public float SpotOuter = 45.0f;
+    public float SpotDropOff = 1.0f;
     public bool ShowDebug = false;
 
     GameObject mNearSph, mFarSph, mInner, mOuter;

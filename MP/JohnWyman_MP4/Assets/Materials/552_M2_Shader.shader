@@ -4,8 +4,9 @@ Shader "552_Shaders/552_M2_Shader"
     Properties
     {
         _MyTex ("MyTex", 2D) = "white" {}
-        _Ka("Ka", Color) = (0.5, 0.5, 0.5, 1)
-        _Kd("Kd", Color) = (1.0, 1.0, 1.0, 1)
+        _Ka("Ka", Color) = (0.1, 0.1, 0.1, 1)
+        _Kd("Kd", Color) = (0.7, 0.8, 0.6, 1)
+        //_Ks("Ks", Color) = (1.0, 1.0, 1.0, 1)
     }
 
     SubShader
@@ -24,6 +25,7 @@ Shader "552_Shaders/552_M2_Shader"
             #include "UnityCG.cginc"
             #include "MyInclude/MyPhong.cginc"
             #include "MyInclude/MyLights.cginc"
+            #include "MyInclude/ControlFlags.cginc"
 
             struct DataFromVertex
             {
@@ -44,6 +46,8 @@ Shader "552_Shaders/552_M2_Shader"
             float4 _MyTex_ST;
             float4 _Kd;
             float4 _Ka;
+            //float3 _CameraPosition;
+            //float3 _n;
 
             DataForFragmentShader VertexProgram(DataFromVertex input)
             {
@@ -64,37 +68,93 @@ Shader "552_Shaders/552_M2_Shader"
             // lgtIndex: index into the light arrays
             // n: normal at visible point (in WC)
             // wpt: pt to be shaded (in WC)
-            float4 ComputeDiffuse(int lgtIndex, float3 n, float3 wpt) {
-                float4 r = float4(0, 0, 0, 1);
-                float3 L = LightPosition[lgtIndex];
-                if (LightState[lgtIndex] != eLightOff) {  // light is on
-                    if (LightState[lgtIndex] == ePointLight)
-                        L = normalize(LightPosition[lgtIndex].xyz - wpt);
-                    // float3 L = normalize(LightPosition[lgtIndex].xyz - wpt);
-                    float nDotl = max(0.0, dot(n, L));
-                    r = LightColor[lgtIndex] * nDotl;
+            //float4 ComputeDiffuse(int lgtIndex, float3 n, float3 wpt) {
+            //    float4 r = float4(0, 0, 0, 1);
+            //    float3 L = LightPosition[lgtIndex];
+
+            //    if (LightState[lgtIndex] != eLightOff) {  // light is on
+            //        
+            //        // Point Light
+            //        L = normalize(LightPosition[lgtIndex].xyz - wpt);
+            //        
+            //        // Directional
+            //        if (LightState[lgtIndex] != ePointLight)
+            //            L = LightPosition.xyz;
+
+            //        float nDotl = max(0.0, dot(n, L));
+            //    }
+            //    return r;
+            //}
+
+            //float4 ComputeSpecular(int lgtIndex, float3 n, float3 wpt, float3 cpt, float Shininess) {
+            //    float4 r = float4(0, 0, 0, 1);
+            //    float3 L = LightPosition[lgtIndex];
+            //    float3 V = normalize((cpt - wpt)); // Camera view
+            //    float3 R = reflect(L, n); // Reflection
+            //    r = dot(V, R) ^ shininess;
+            //    return r;
+            //}
+
+            float3 ComputeLightNormal(int lgtIndex, float3 wpt)
+            {
+                if (LightState[lgtIndex] == ePointLight) {
+                    return normalize(LightPosition[lgtIndex].xyz - wpt);
                 }
-                return r;
+
+                if (LightState[lgtIndex] == eDirectionalLight) {
+                    return LightPosition[lgtIndex];
+                }
+                
+                return float3(0.0f, 0.0f, 0.0f);
             }
 
             
             float4 FragmentProgram(DataForFragmentShader input) : SV_Target
             {
-                // Set Ambient Light
-                float4 col = float4(0.5, 0.5, 0.5, 1);
-                if (FlagIsOn(kAmbient)) col = _Ka;
+                //float3 V = normalize(CameraPosition.xyz - input.worldPt);
                 
-                // Set Diffused Light
-                if (FlagIsOn(kDiffuse)) {
-                    col *= _Kd;
-                    for (int lgt = 0; lgt < kNumLights; lgt++)
+                
+                // Set Ambient Light
+                float4 col = float4(0, 0, 0, 1);
+                if (FlagIsOn(kAmbient)) col += _Ka;
+                
+                //// Set Diffused Light
+                //if (FlagIsOn(kDiffuse)) {
+                //    col *= _Kd;
+                //    for (int lgt = 0; lgt < kNumLights; lgt++)
+                //    {
+                //        col += ComputeDiffuse(lgt, input.normal, input.worldPt);
+                //        if (FlagIsOn(kSpecular)) {
+
+                //        }
+                //    }
+                //}
+
+                for (int lgt = 0; lgt < kNumLights; lgt++)
+                {
+                    float3 Lt = ComputeLightNormal(lgt, input.worldPt);
+                    //float3 Rt = reflect(Lt, input.normal);
+
+                    float4 Idt = float4(0, 0, 0, 0);
+                    float4 Ist = float4(0, 0, 0, 0);
+
+                    if (FlagIsOn(kDiffuse))
                     {
-                        col += ComputeDiffuse(lgt, input.normal, input.worldPt);
+                        Idt = _Kd * max(0.0, dot(input.normal, Lt));
                     }
+
+                    //if (FlagIsOn(kSpecular))
+                    //{
+                    //    Ist = _Ks * (max(0.0, dot(V, Rt))) ^ _n;
+                    //}
+                    col += (LightColor[lgt] * (Idt + Ist));
                 }
 
+
+
                 // Set Texture
-                if (FlagIsOn(kTexture)) col *= tex2D(_MyTex, input.uv);
+                if (FlagIsOn(kTexture)) 
+                    col *= tex2D(_MyTex, input.uv);
 
                 return col;
             }

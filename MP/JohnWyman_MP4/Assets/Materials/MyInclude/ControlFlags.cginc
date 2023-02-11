@@ -21,4 +21,4 @@ static const float eDirectionalLight = 1.0;
 static const float ePointLight = 2.0;
 static const float eSpotLight = 3.0;   // not supported in MP4
 
-#endif CONTROL_FLAGS
+#endif // CONTROL_FLAGS
