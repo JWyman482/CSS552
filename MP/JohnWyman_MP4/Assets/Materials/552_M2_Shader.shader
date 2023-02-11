@@ -66,8 +66,11 @@ Shader "552_Shaders/552_M2_Shader"
             // wpt: pt to be shaded (in WC)
             float4 ComputeDiffuse(int lgtIndex, float3 n, float3 wpt) {
                 float4 r = float4(0, 0, 0, 1);
+                float3 L = LightPosition[lgtIndex];
                 if (LightState[lgtIndex] != eLightOff) {  // light is on
-                    float3 L = normalize(LightPosition[lgtIndex].xyz - wpt);
+                    if (LightState[lgtIndex] == ePointLight)
+                        L = normalize(LightPosition[lgtIndex].xyz - wpt);
+                    // float3 L = normalize(LightPosition[lgtIndex].xyz - wpt);
                     float nDotl = max(0.0, dot(n, L));
                     r = LightColor[lgtIndex] * nDotl;
                 }
