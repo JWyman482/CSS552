@@ -6,11 +6,10 @@ public class MaterialLoader : MonoBehaviour
 {
     public float AmbientIntensityKa = 0.2f;
     public Color AmbientColor = new Color(0.1f, 0.1f, 0.1f, 1.0f);
-
     public float DiffuseIntensityKd = 1f;
     public Color DiffuseColor = new Color(1f, 1f, 1f, 1f);
     public Texture DiffuseTexture = null;
-
+    public float n = 1f;
 
 
     private Material mat;

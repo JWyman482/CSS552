@@ -43,6 +43,9 @@ public class LightsLoader
         mLightColor[index] = s.LightColor;
         
         Vector3 LightPosition = s.transform.localPosition;
+        if (s.LightState != LightSource.LightStateEnum.eLightPoint)
+            LightPosition = s.transform.up;
+            
         mLightPosition[index] = new Vector4(LightPosition.x, LightPosition.y, LightPosition.z, 1f);
         
         if (s.LightIsOn)
