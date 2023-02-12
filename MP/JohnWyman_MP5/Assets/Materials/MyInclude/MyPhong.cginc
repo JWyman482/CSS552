@@ -56,7 +56,6 @@ float4 PhongIlluminate(float3 eyePos, float3 wpt, int lgt, float3 N, float4 text
         
         float3 S = LightDirection[lgt];
         
-        
         if (FlagIsOn(kAngularAtten))
         {
             // Not efficient, but makes it easier to read
