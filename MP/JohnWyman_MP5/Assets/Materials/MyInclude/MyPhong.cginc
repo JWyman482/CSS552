@@ -72,13 +72,33 @@ float4 PhongIlluminate(float3 eyePos, float3 wpt, int lgt, float3 N, float4 text
         
         if (FlagIsOn(kDistanceAtten))
         {
+            float n = dist - LightNear[lgt];
+            float d = LightFar[lgt] - LightNear[lgt];
+            
             if (dist < LightNear[lgt])
                 LightInt = 1.0f;
             else if (dist > LightFar[lgt])
                 LightInt = 0.0f;
             else
-                //smoothstep(0.0f, 1.0f, 1.0f - (LightNear[lgt] * LightNear[lgt]) / (LightFar[lgt] * LightFar[lgt]));
-                smoothstep(0.0f, 1.0f, 1.0f - (LightNear[lgt] * LightNear[lgt]) / (dist * dist));
+                smoothstep(0.0f, 1.0f, 1.0f - (n * n) / (d * d));
+                //smoothstep(0.0f, 1.0f, 1.0f - (LightNear[lgt] * LightNear[lgt]) / (dist * dist));
+        }
+    }
+    
+    if (LightState[lgt] == ePointLight)
+    {
+        if (FlagIsOn(kDistanceAtten))
+        {
+            float n = dist - LightNear[lgt];
+            float d = LightFar[lgt] - LightNear[lgt];
+            
+            if (dist < LightNear[lgt])
+                LightInt = 1.0f;
+            else if (dist > LightFar[lgt])
+                LightInt = 0.0f;
+            else
+                smoothstep(0.0f, 1.0f, 1.0f - (n * n) / (d * d));
+                //smoothstep(0.0f, 1.0f, 1.0f - (LightNear[lgt] * LightNear[lgt]) / (dist * dist));
         }
     }
     
