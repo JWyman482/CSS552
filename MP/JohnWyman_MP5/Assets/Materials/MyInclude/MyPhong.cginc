@@ -53,7 +53,9 @@ float4 PhongIlluminate(float3 eyePos, float3 wpt, int lgt, float3 N, float4 text
     // Spot Light Calc
     if (LightState[lgt] == eSpotLight)
     {
+        
         float3 S = LightDirection[lgt];
+        
         
         if (FlagIsOn(kAngularAtten))
         {
@@ -80,9 +82,11 @@ float4 PhongIlluminate(float3 eyePos, float3 wpt, int lgt, float3 N, float4 text
             else if (dist > LightFar[lgt])
                 LightInt = 0.0f;
             else
-                smoothstep(0.0f, 1.0f, 1.0f - (n * n) / (d * d));
+                LightInt = smoothstep(0.0f, 1.0f, 1.0f - (n * n) / (d * d));
                 //smoothstep(0.0f, 1.0f, 1.0f - (LightNear[lgt] * LightNear[lgt]) / (dist * dist));
         }
+        
+        L = LightDirection[lgt];
     }
     
     if (LightState[lgt] == ePointLight)
@@ -97,7 +101,7 @@ float4 PhongIlluminate(float3 eyePos, float3 wpt, int lgt, float3 N, float4 text
             else if (dist > LightFar[lgt])
                 LightInt = 0.0f;
             else
-                smoothstep(0.0f, 1.0f, 1.0f - (n * n) / (d * d));
+                LightInt = smoothstep(0.0f, 1.0f, 1.0f - (n * n) / (d * d));
                 //smoothstep(0.0f, 1.0f, 1.0f - (LightNear[lgt] * LightNear[lgt]) / (dist * dist));
         }
     }
