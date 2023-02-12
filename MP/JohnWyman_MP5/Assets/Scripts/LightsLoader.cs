@@ -12,6 +12,12 @@ public class LightsLoader
     Vector4[]  mLightDirection;
     Vector4[] mLightColor;
     float[] mLightIntensity;
+
+    float[] mLightNear;
+    float[] mLightFar;
+    float[] mLightInner;
+    float[] mLightOuter;
+    float[] mLightDropoff;
     
     public LightsLoader()
     {
@@ -21,12 +27,24 @@ public class LightsLoader
         mLightColor = new Vector4[kNumLights];
         mLightIntensity = new float[kNumLights];
 
+        mLightNear = new float[kNumLights];
+        mLightFar = new float[kNumLights]; 
+        mLightInner = new float[kNumLights]; 
+        mLightOuter = new float[kNumLights];
+        mLightDropoff = new float[kNumLights];
+
         for (int i = 0; i < kNumLights; i++) {
             mLightState[i] = 0.0f;  // this is off
             mLightPosition[i] =  Vector4.zero;
             mLightDirection[i] = Vector4.zero;
             mLightColor[i] = Vector4.zero;
             mLightIntensity[i] = 1.0f;
+
+            mLightNear[i] = 0.0f;
+            mLightFar[i] = 0.0f;
+            mLightInner[i] = 0.0f;
+            mLightOuter[i] = 0.0f;
+            mLightDropoff[i] = 0.0f;
         }
     }
 
@@ -34,19 +52,16 @@ public class LightsLoader
     public void LoadLightsToShader()
     {
         Shader.SetGlobalFloatArray("LightState", mLightState);
-
         Shader.SetGlobalVectorArray("LightPosition", mLightPosition);
-        
         Shader.SetGlobalVectorArray("LightDirection", mLightDirection);
-        
         Shader.SetGlobalVectorArray("LightColor", mLightColor);
         Shader.SetGlobalFloatArray("LightIntensity", mLightIntensity);
-        
-        // Debug.Log("Load shader: mLightPosition:" + mLightPosition.Length + " " + mLightPosition);
-        // if you get this error message:
-        //      Property (LightPosition) exceeds previous array size (2 vs 1). Cap to previous size. Restart Unity to recreate the arrays.
-        // then, you will have to quit and re-start unity. Arrays in the share is _very_ tricky
-        //      ref: https://forum.unity.com/threads/shader-setglobalvectorarray-size-is-limited-even-when-list-is-passed.572518/ 
+
+        Shader.SetGlobalFloatArray("LightNear", mLightNear);
+        Shader.SetGlobalFloatArray("LightFar", mLightFar);
+        Shader.SetGlobalFloatArray("LightInner", mLightInner);
+        Shader.SetGlobalFloatArray("LightOuter", mLightOuter);
+        Shader.SetGlobalFloatArray("LightDropoff", mLightDropoff);
     }
 
     public void LightSourceSetLoader(int index, LightSource s) {
@@ -57,9 +72,13 @@ public class LightsLoader
 
         mLightPosition[index] = s.transform.localPosition;
         mLightDirection[index] = s.transform.up;
-
         mLightColor[index] = s.LightColor;
         mLightIntensity[index] = s.Intensity;
 
+        mLightNear[index] = s.Near;
+        mLightFar[index] = s.Far;
+        mLightInner[index] = s.SpotInner;
+        mLightOuter[index] = s.SpotOuter;
+        mLightDropoff[index] = s.SpotDropOff;
     }
 }

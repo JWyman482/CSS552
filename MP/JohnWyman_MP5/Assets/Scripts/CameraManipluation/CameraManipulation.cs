@@ -1,9 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
+
 namespace camera
 {
-
-
     public partial class CameraManipulation : MonoBehaviour
     {
         public Transform LookAt;

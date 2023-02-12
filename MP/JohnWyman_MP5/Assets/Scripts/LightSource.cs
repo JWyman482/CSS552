@@ -8,7 +8,7 @@ public class LightSource : MonoBehaviour
         // eLightOff = 0,
         eLightDirectional = 1,
         eLightPoint = 2,
-        eLightSpot = 3  // not supported here
+        eLightSpot = 3
     };
 
     public bool LightIsOn = true;

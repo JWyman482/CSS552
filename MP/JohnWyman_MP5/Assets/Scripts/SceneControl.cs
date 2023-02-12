@@ -17,38 +17,30 @@ public class SceneControl : MonoBehaviour
     public bool Texture = true;
     public bool Ambient = true;
     public bool Diffuse = true;
+    public bool Specular = true;
+    public bool DistanceAttenuation = true;
+    public bool AngularAttenuation = true;
 
     public LightSource[] Lights;
+    public Camera MainCamera;
     LightsLoader mLgtLoader = new LightsLoader();
-    
-    void Start()
-    {
-        /*  Either this way, or in the editor
-        Lights = new LightSource[kNumLights];
-        for (int i = 0; i < kNumLights; i++) {
-            GameObject g = new GameObject();
-            g.name = "Light " + i;
-            g.transform.SetParent(transform, false);
-            Lights[i] = g.AddComponent<LightSource>();
-        }
-        */
-    }
 
     void SetLightLoader() {
         for (int i = 0; i < kNumLights; i++)
             mLgtLoader.LightSourceSetLoader(i, Lights[i]);
     }
 
-    // Update is called once per frame
     void Update()
     {   
-        // ShaderMode;
         int mode = (Texture) ? kUseTexture : 0;
         mode |= (Ambient) ? kCompAmbient : 0;
         mode |= (Diffuse) ? kCompDiffuse : 0;
+        mode |= (Specular) ? kCompSpecular : 0;
+        mode |= (DistanceAttenuation) ? kCompDistAtten: 0;
+        mode |= (AngularAttenuation) ? kCompAngularAtten : 0;
 
         Shader.SetGlobalInt("_ShaderMode", mode);
-        // Debug.Log("ShaderMode=" + mode);
+        Shader.SetGlobalVector("_CameraPosition", MainCamera.transform.localPosition);  // Will need to normalize for V^ in the shader.
 
         SetLightLoader();
         mLgtLoader.LoadLightsToShader();
