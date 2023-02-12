@@ -58,30 +58,27 @@ float4 PhongIlluminate(float3 eyePos, float3 wpt, int lgt, float3 N, float4 text
         if (FlagIsOn(kAngularAtten))
         {
             // Not efficient, but makes it easier to read
-            float alpha = degrees(acos(dot(L, S)));
-            float theta = LightInner[lgt];
-            float phi = LightOuter[lgt];
+            float alpha = acos(dot(L, S));
+            float theta = radians(LightInner[lgt]);
+            float phi = radians(LightOuter[lgt]);
             
-            if (alpha <= theta)
+            if (alpha < theta)
                 LightInt = 1.0f;
             else if (alpha > phi)
                 LightInt = 0.0f;
             else
-            {
                 LightInt = smoothstep(0.0f, 1.0f, pow((cos(alpha) - cos(phi)) / (cos(theta) - cos(phi)), LightDropoff[lgt]));
-            }
         }
         
         if (FlagIsOn(kDistanceAtten))
         {
-            if (dist <= LightNear[lgt])
+            if (dist < LightNear[lgt])
                 LightInt = 1.0f;
             else if (dist > LightFar[lgt])
                 LightInt = 0.0f;
             else
-            {
-                smoothstep(0.0f, 1.0f, 1.0 - (LightNear[lgt] * LightNear[lgt]) / (dist * dist));
-            }
+                //smoothstep(0.0f, 1.0f, 1.0f - (LightNear[lgt] * LightNear[lgt]) / (LightFar[lgt] * LightFar[lgt]));
+                smoothstep(0.0f, 1.0f, 1.0f - (LightNear[lgt] * LightNear[lgt]) / (dist * dist));
         }
     }
     
