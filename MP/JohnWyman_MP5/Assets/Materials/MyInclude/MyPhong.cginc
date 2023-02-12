@@ -53,21 +53,35 @@ float4 PhongIlluminate(float3 eyePos, float3 wpt, int lgt, float3 N, float4 text
     // Spot Light Calc
     if (LightState[lgt] == eSpotLight)
     {
-        // L = vector, not normalized, from wpt to Light
         float3 S = LightDirection[lgt];
-        float3 Lneg = -1 * L;
+        
         if (FlagIsOn(kAngularAtten))
         {
-        
-            float angularDifference = degrees(acos(dot(L, S)));
+            // Not efficient, but makes it easier to read
+            float alpha = degrees(acos(dot(L, S)));
+            float theta = LightInner[lgt];
+            float phi = LightOuter[lgt];
             
-            if (angularDifference > LightOuter[lgt])
+            if (alpha <= theta)
+                LightInt = 1.0f;
+            else if (alpha > phi)
                 LightInt = 0.0f;
+            else
+            {
+                LightInt = smoothstep(0.0f, 1.0f, pow((cos(alpha) - cos(phi)) / (cos(theta) - cos(phi)), LightDropoff[lgt]));
+            }
         }
         
         if (FlagIsOn(kDistanceAtten))
         {
-            
+            if (dist <= LightNear[lgt])
+                LightInt = 1.0f;
+            else if (dist > LightFar[lgt])
+                LightInt = 0.0f;
+            else
+            {
+                smoothstep(0.0f, 1.0f, 1.0 - (LightNear[lgt] * LightNear[lgt]) / (dist * dist));
+            }
         }
     }
     

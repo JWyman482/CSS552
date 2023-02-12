@@ -155,7 +155,7 @@ MonoBehaviour:
   LightIsOn: 0
   LightState: 1
   LightColor: {r: 1, g: 1, b: 1, a: 1}
-  Intensity: 2
+  Intensity: 1
   Near: 55
   Far: 80
   SpotInner: 25
@@ -209,14 +209,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32dc32fe899fc5149b456a8fcb2bd706, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  LookAtMe: 0
   Ka: 0.2
   Ambient: {r: 0.1, g: 0.1, b: 0.1, a: 1}
   Kd: 0.8
   Diffuse: {r: 0.41091138, g: 0.49739596, b: 0.509434, a: 1}
+  DiffuseTexture: {fileID: 2800000, guid: 4430cbd0c56859c48a4d192a66725e8c, type: 3}
   Ks: 1
   Specular: {r: 0.6, g: 0.8, b: 0.7, a: 1}
   n: 1
-  DiffuseTexture: {fileID: 2800000, guid: 4430cbd0c56859c48a4d192a66725e8c, type: 3}
 --- !u!64 &200105722
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -343,14 +344,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32dc32fe899fc5149b456a8fcb2bd706, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  LookAtMe: 0
   Ka: 0.2
   Ambient: {r: 0.1, g: 0.1, b: 0.1, a: 1}
   Kd: 0.8
   Diffuse: {r: 0.6, g: 0.8, b: 0.7, a: 1}
+  DiffuseTexture: {fileID: 2800000, guid: 4430cbd0c56859c48a4d192a66725e8c, type: 3}
   Ks: 1
   Specular: {r: 0.6, g: 0.8, b: 0.7, a: 1}
   n: 20
-  DiffuseTexture: {fileID: 2800000, guid: 4430cbd0c56859c48a4d192a66725e8c, type: 3}
 --- !u!135 &326492676
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -461,14 +463,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32dc32fe899fc5149b456a8fcb2bd706, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  LookAtMe: 0
   Ka: 0.2
   Ambient: {r: 0.1, g: 0.1, b: 0.1, a: 1}
   Kd: 0.6
   Diffuse: {r: 0.6, g: 0.8, b: 0.7, a: 1}
+  DiffuseTexture: {fileID: 2800000, guid: 4430cbd0c56859c48a4d192a66725e8c, type: 3}
   Ks: 1
   Specular: {r: 0.6, g: 0.8, b: 0.7, a: 1}
   n: 100
-  DiffuseTexture: {fileID: 2800000, guid: 4430cbd0c56859c48a4d192a66725e8c, type: 3}
 --- !u!135 &396250760
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -640,6 +643,37 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &641905668
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 641905669}
+  m_Layer: 0
+  m_Name: Highlight Point
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &641905669
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 641905668}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &697092931
 GameObject:
   m_ObjectHideFlags: 0
@@ -672,7 +706,7 @@ MonoBehaviour:
   LightIsOn: 0
   LightState: 2
   LightColor: {r: 1, g: 1, b: 1, a: 1}
-  Intensity: 2
+  Intensity: 1
   Near: 55
   Far: 80
   SpotInner: 25
@@ -723,10 +757,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a189b3c1c7ab03045b1b83e5ad643f34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LightIsOn: 1
-  LightState: 3
+  LightIsOn: 0
+  LightState: 2
   LightColor: {r: 1, g: 1, b: 1, a: 1}
-  Intensity: 2
+  Intensity: 1
   Near: 55
   Far: 80
   SpotInner: 13
@@ -765,14 +799,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32dc32fe899fc5149b456a8fcb2bd706, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  LookAtMe: 0
   Ka: 0.2
   Ambient: {r: 0.1, g: 0.1, b: 0.1, a: 1}
   Kd: 0.8
   Diffuse: {r: 0.6, g: 0.8, b: 0.7, a: 1}
+  DiffuseTexture: {fileID: 0}
   Ks: 1
   Specular: {r: 0.6, g: 0.8, b: 0.7, a: 1}
   n: 1
-  DiffuseTexture: {fileID: 0}
 --- !u!1 &854312865
 GameObject:
   m_ObjectHideFlags: 0
@@ -820,14 +855,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32dc32fe899fc5149b456a8fcb2bd706, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  LookAtMe: 0
   Ka: 0.2
   Ambient: {r: 0.1, g: 0.1, b: 0.1, a: 1}
   Kd: 0.8
   Diffuse: {r: 0.6, g: 0.8, b: 0.7, a: 1}
+  DiffuseTexture: {fileID: 2800000, guid: 4430cbd0c56859c48a4d192a66725e8c, type: 3}
   Ks: 1
   Specular: {r: 0.6, g: 0.8, b: 0.7, a: 1}
   n: 1
-  DiffuseTexture: {fileID: 2800000, guid: 4430cbd0c56859c48a4d192a66725e8c, type: 3}
 --- !u!135 &854312868
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -938,14 +974,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32dc32fe899fc5149b456a8fcb2bd706, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  LookAtMe: 0
   Ka: 0.2
   Ambient: {r: 0.1, g: 0.1, b: 0.1, a: 1}
   Kd: 0.8
   Diffuse: {r: 0.6, g: 0.8, b: 0.7, a: 1}
+  DiffuseTexture: {fileID: 2800000, guid: 4430cbd0c56859c48a4d192a66725e8c, type: 3}
   Ks: 1
   Specular: {r: 0.6, g: 0.8, b: 0.7, a: 1}
   n: 2
-  DiffuseTexture: {fileID: 2800000, guid: 4430cbd0c56859c48a4d192a66725e8c, type: 3}
 --- !u!135 &921565085
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1103,20 +1140,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 963194225}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 112f3c3d932f0754fb20c1c06df527a3, type: 3}
+  m_Script: {fileID: 11500000, guid: eeb09774dd29046448a9631e5e2d4828, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LookAt: {fileID: 921565083}
+  LookAt: {fileID: 641905669}
   DrawFrustum: 0
-  mMouseX: 0
-  mMouseY: 0
-  mNearPlane: {fileID: 0}
-  mFarPlane: {fileID: 0}
-  mLL: {fileID: 0}
-  mLR: {fileID: 0}
-  mUL: {fileID: 0}
-  mUR: {fileID: 0}
-  mSight: {fileID: 0}
 --- !u!1 &1107777046 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 100000, guid: 354198794248843da8555877937ee568, type: 3}
@@ -1134,14 +1162,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32dc32fe899fc5149b456a8fcb2bd706, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  LookAtMe: 0
   Ka: 0.2
   Ambient: {r: 0.09803922, g: 0.09803922, b: 0.09803922, a: 1}
   Kd: 0.8
   Diffuse: {r: 0.78431374, g: 0.83137256, b: 0.78431374, a: 1}
+  DiffuseTexture: {fileID: 2800000, guid: 0f3c1eef6d828164fbe07de9da607f97, type: 3}
   Ks: 1
   Specular: {r: 0.6, g: 0.8, b: 0.7, a: 1}
   n: 1
-  DiffuseTexture: {fileID: 2800000, guid: 0f3c1eef6d828164fbe07de9da607f97, type: 3}
 --- !u!1 &1420654389
 GameObject:
   m_ObjectHideFlags: 0
@@ -1152,6 +1181,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1420654391}
   - component: {fileID: 1420654390}
+  - component: {fileID: 1420654393}
+  - component: {fileID: 1420654392}
   m_Layer: 0
   m_Name: Light 0
   m_TagString: Untagged
@@ -1174,7 +1205,7 @@ MonoBehaviour:
   LightIsOn: 1
   LightState: 2
   LightColor: {r: 1, g: 1, b: 1, a: 1}
-  Intensity: 2
+  Intensity: 1
   Near: 55
   Far: 80
   SpotInner: 25
@@ -1188,14 +1219,64 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1420654389}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: 0.023342876, w: 0.99972755}
   m_LocalPosition: {x: 50, y: 50, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 5, y: 5, z: 5}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1867474779}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 2.675}
+--- !u!33 &1420654392
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1420654389}
+  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &1420654393
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1420654389}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 1c06127e2110bdd40bbba7b4b4df373a, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1001 &1480819429
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1452,14 +1533,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32dc32fe899fc5149b456a8fcb2bd706, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  LookAtMe: 0
   Ka: 0.2
   Ambient: {r: 0.1, g: 0.1, b: 0.1, a: 1}
   Kd: 0.8
   Diffuse: {r: 0.6, g: 0.8, b: 0.7, a: 1}
+  DiffuseTexture: {fileID: 2800000, guid: 4430cbd0c56859c48a4d192a66725e8c, type: 3}
   Ks: 1
   Specular: {r: 0.6, g: 0.8, b: 0.7, a: 1}
   n: 1
-  DiffuseTexture: {fileID: 2800000, guid: 4430cbd0c56859c48a4d192a66725e8c, type: 3}
 --- !u!1 &1822169734 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 100000, guid: fa23ba21d03513f46b70227bb5a7dc67, type: 3}
@@ -1482,14 +1564,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32dc32fe899fc5149b456a8fcb2bd706, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  LookAtMe: 0
   Ka: 0.2
   Ambient: {r: 0.1, g: 0.1, b: 0.1, a: 1}
   Kd: 0.8
   Diffuse: {r: 0.6415094, g: 0.59340686, b: 0.5719117, a: 1}
+  DiffuseTexture: {fileID: 2800000, guid: dd562dfa1d8b00d4da6781c4969729da, type: 3}
   Ks: 1
   Specular: {r: 0.6, g: 0.8, b: 0.7, a: 1}
   n: 1
-  DiffuseTexture: {fileID: 2800000, guid: dd562dfa1d8b00d4da6781c4969729da, type: 3}
 --- !u!1 &1867474777
 GameObject:
   m_ObjectHideFlags: 0
@@ -1660,11 +1743,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32dc32fe899fc5149b456a8fcb2bd706, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  LookAtMe: 0
   Ka: 0.2
   Ambient: {r: 0.1, g: 0.1, b: 0.1, a: 1}
   Kd: 0.8
   Diffuse: {r: 0.56189924, g: 0.6509434, b: 0.6121293, a: 1}
+  DiffuseTexture: {fileID: 2800000, guid: 12e60978b41a4d742861553e8575b289, type: 3}
   Ks: 1
   Specular: {r: 0.6, g: 0.8, b: 0.7, a: 1}
   n: 1
-  DiffuseTexture: {fileID: 2800000, guid: 12e60978b41a4d742861553e8575b289, type: 3}
