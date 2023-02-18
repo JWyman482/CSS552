@@ -28,9 +28,13 @@ public class LightSource : MonoBehaviour
 
     const float kIndicationThickness = 0.2f;
     const float kDirectionWidth = 0.25f;
+
+    private Mesh thisMesh;
+    private Mesh tgtMesh;
     
     void Start()
     {
+        
         mNearSph = GameObject.CreatePrimitive(PrimitiveType.Sphere);
         mFarSph =  GameObject.CreatePrimitive(PrimitiveType.Sphere);
         mNearSph.GetComponent<MeshRenderer>().material = Resources.Load<Material>("Mat/Default_Transparent");
@@ -42,6 +46,10 @@ public class LightSource : MonoBehaviour
         g.name = "Direction";
         mDirection = g.AddComponent<LineSegment>();
         mDirection.SetWidth(kDirectionWidth);
+
+        // Cosmetics
+        thisMesh = GetComponent<MeshFilter>().mesh;
+        tgtMesh = g.GetComponent<MeshFilter>().mesh;
 
         mInner = GameObject.CreatePrimitive(PrimitiveType.Sphere);
         mOuter = GameObject.CreatePrimitive(PrimitiveType.Sphere);
@@ -62,6 +70,12 @@ public class LightSource : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // Cosmetics
+        // If a light is on, it illuminates. If it is directional or spot, it becomes a cylinder so we can see direction.
+        GetComponent<Renderer>().material.SetFloat("_ColWeight", LightIsOn? 1.0f : 0.0f);
+        GetComponent<MeshFilter>().mesh = LightIsOn && (LightState == LightStateEnum.eLightDirectional || LightState == LightStateEnum.eLightSpot) ? tgtMesh : thisMesh;
+        
+
         mNearSph.SetActive(LightIsOn && false);
         mFarSph.SetActive(LightIsOn && false);
         mInner.SetActive(LightIsOn && false);

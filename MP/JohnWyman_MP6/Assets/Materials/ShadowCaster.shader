@@ -1,4 +1,4 @@
-Shader "Unlit/ShadowCaster"
+Shader "552_Shaders/ShadowCaster"
 {
     Properties
     {

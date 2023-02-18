@@ -1,4 +1,4 @@
-Shader "Unlit/ShadowReceiver"
+Shader "552_Shaders/ShadowReceiver"
 {
     Properties
     {
