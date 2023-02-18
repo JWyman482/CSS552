@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.12731749, g: 0.13414757, b: 0.1210787, a: 1}
+  m_IndirectSpecularColor: {r: 0.12731704, g: 0.13414727, b: 0.121078536, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1213,6 +1213,21 @@ MonoBehaviour:
   Specular: {r: 0.5254902, g: 0, b: 0, a: 1}
   Specularity: 1
   DiffuseTexture: {fileID: 2800000, guid: 0f3c1eef6d828164fbe07de9da607f97, type: 3}
+--- !u!114 &1107777054
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1107777046}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f483aebd43331e4c8ffece45df8efa2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LightPosition: {fileID: 0}
+  ShadowReceiver: {fileID: 0}
+  ShadowColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
 --- !u!1 &1359218590 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 100040, guid: f2c827ad027fe4f9991a5c64dc590d17, type: 3}
@@ -1771,6 +1786,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1867474779}
   - component: {fileID: 1867474778}
+  - component: {fileID: 1867474780}
   m_Layer: 0
   m_Name: SceneControl
   m_TagString: Untagged
@@ -1821,6 +1837,21 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1867474780
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1867474777}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f483aebd43331e4c8ffece45df8efa2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LightPosition: {fileID: 1420654391}
+  ShadowReceiver: {fileID: 2014291603}
+  ShadowColor: {r: 0.103773594, g: 0.103773594, b: 0.103773594, a: 1}
 --- !u!1 &1901495028
 GameObject:
   m_ObjectHideFlags: 0
@@ -2024,7 +2055,6 @@ GameObject:
   - component: {fileID: 2014291607}
   - component: {fileID: 2014291606}
   - component: {fileID: 2014291605}
-  - component: {fileID: 2014291604}
   m_Layer: 0
   m_Name: ReceiverPlane
   m_TagString: Untagged
@@ -2047,19 +2077,6 @@ Transform:
   m_Father: {fileID: 958074767}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
---- !u!114 &2014291604
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2014291602}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b03975e5e1fb3f04285d04158a8bf386, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  p: {fileID: 1591395062}
 --- !u!64 &2014291605
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -2094,7 +2111,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: bc83e860cf1401b45be031239a1ba9ec, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
