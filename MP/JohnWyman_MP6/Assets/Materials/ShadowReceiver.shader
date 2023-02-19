@@ -26,9 +26,9 @@ Shader "552_Shaders/ShadowReceiver"
             CGPROGRAM
             #pragma vertex vert
             #pragma fragment frag
-            #include "CommonShaderCode/CommonDataStruct.cginc"
-            #include "CommonShaderCode/CommonVShader.cginc"
-            #include "CommonShaderCode/CommonFShader.cginc"
+            #include "/CommonShaderCode/CommonDataStruct.cginc"
+            #include "/CommonShaderCode/CommonVShader.cginc"
+            #include "/CommonShaderCode/CommonFShader.cginc"
             ENDCG
         }  // Pass
     } // SubShader

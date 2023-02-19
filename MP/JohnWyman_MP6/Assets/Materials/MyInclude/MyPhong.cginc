@@ -13,11 +13,11 @@ inline int FlagIsOn(int flag) {
     return ((_ShaderMode & flag) != 0);
 }
 
-static const float eLightOff = 0.0;
-static const float eDirectionalLight = 1.0;
-static const float ePointLight = 2.0;
-static const float eSpotLight = 3.0;
-
+// Moved to MyLights
+//static const float eLightOff = 0.0;
+//static const float eDirectionalLight = 1.0;
+//static const float ePointLight = 2.0;
+//static const float eSpotLight = 3.0;
 // Must include:
 //    MyLights
 //    MyMaterial
@@ -90,8 +90,8 @@ float4 PhongIlluminate(float3 eyePos, float3 wpt, int lgt, float3 N, float4 text
         if (FlagIsOn(kDistanceAtten))
             dStrength = DistanceDropOff(lgt, dist);
     }
-    float4  diffuse = DiffuseResult(N, L, textureMapColor);
-    float4  specular = SpecularResult(eyePos, wpt, N, L);
+    float4 diffuse = DiffuseResult(N, L, textureMapColor);
+    float4 specular = SpecularResult(eyePos, wpt, N, L);
     float4 result = aStrength * dStrength * LightIntensity[lgt] * LightColor[lgt] * (diffuse + specular);
     return result;
 }

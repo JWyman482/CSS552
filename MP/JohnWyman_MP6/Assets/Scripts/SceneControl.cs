@@ -21,6 +21,9 @@ public class SceneControl : MonoBehaviour
     public bool DistanceAttenuation = true;
     public bool AngularAttenuation = true;
     public LightSource[] Lights;
+    public Transform ShadowReceiver = null;
+    public Color ShadowColor = Color.gray;
+
     LightsLoader mLgtLoader = new LightsLoader();
 
     
@@ -35,6 +38,7 @@ public class SceneControl : MonoBehaviour
             Lights[i] = g.AddComponent<LightSource>();
         }
         */
+        Debug.Assert(ShadowReceiver != null);
     }
 
     void SetLightLoader() {
@@ -64,5 +68,13 @@ public class SceneControl : MonoBehaviour
 
         SetLightLoader();
         mLgtLoader.LoadLightsToShader();
+
+        float D = Vector3.Dot(ShadowReceiver.localPosition, ShadowReceiver.up);
+
+        //Shader.SetGlobalVector("_LightPos", LightPosition.localPosition);
+        Shader.SetGlobalColor("_ShadowColor", ShadowColor);
+        Shader.SetGlobalVector("_Normal", ShadowReceiver.up);
+        Shader.SetGlobalFloat("_D", D);
+
     }
 }

@@ -11,6 +11,7 @@ public class MaterialLoader : MonoBehaviour
     public float Ks = 0.6f;
     public Color Specular = new Color(0.2f, 0.2f, 0.2f, 1.0f);
     public float Specularity = 1f;
+    public float ShadowWeight = 1f;
     Material mMat = null;
 
     public Texture2D DiffuseTexture = null;
@@ -34,5 +35,8 @@ public class MaterialLoader : MonoBehaviour
         mMat.SetVector("_Kd", C2f(Diffuse, Kd));
         mMat.SetVector("_Ks", C2f(Specular, Ks));
         mMat.SetFloat("_Specularity", Specularity);
+        mMat.SetFloat("_ShadowWeight", ShadowWeight);
+
+        //Shader.SetGlobalFloat("_ShadowWeight", ShadowWeight);
     }
 }

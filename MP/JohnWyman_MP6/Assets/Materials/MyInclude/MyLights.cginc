@@ -17,4 +17,27 @@ float SpotInnerCos[kNumLights];
 float SpotOuterCos[kNumLights];
 float SpotDropOff[kNumLights];
 
+static const float eLightOff = 0.0;
+static const float eDirectionalLight = 1.0;
+static const float ePointLight = 2.0;
+static const float eSpotLight = 3.0;
+
+float ShadowAngularDropOff(int lgt, float3 L)
+{
+    float strength = 0.0;
+    float cosL = dot(LightDirection[lgt], L);
+    float num = cosL - SpotOuterCos[lgt];
+    if (num > 0.0)
+    {
+        if (cosL > SpotInnerCos[lgt]) 
+            strength = 1.0;
+        else
+        {
+            float denom = SpotInnerCos[lgt] - SpotOuterCos[lgt];
+            strength = smoothstep(0.0, 1.0, pow(num / denom, SpotDropOff[lgt]));
+        }
+    }
+    return strength;
+}
+
 #endif // MY_LIGHTS

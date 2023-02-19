@@ -17,6 +17,7 @@ public class ShadowCasterLoader : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
         float D = Vector3.Dot(ShadowReceiver.localPosition, ShadowReceiver.up);
 
         Shader.SetGlobalVector("_LightPos", LightPosition.localPosition);

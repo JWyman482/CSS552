@@ -8,23 +8,13 @@ Shader "552_Shaders/CastShadow+Phong"
         _Kd ("Diffuse", Color) = (0.7, 0.8, 0.6, 1)
         _Ks ("Specular", Color) = (0.1, 0.1, 0.3, 1)
         _Specularity("n", float) = 1.0
-
-            // Global control on LightLoader
-        // _ShaderMode("Mode", int) = 0
-            // Bits: On (yes) or Off (no)
-            //  All off: returns black
-            //   0: Texture   (1)
-            //   1: Ambient   (2)
-            //   2: Diffuse   (4)
-            //   3: Specular  (8)
-            //   4: Distance Attenuation (16)
-            //   5: Angular Attenuation (32)
     }
+
     SubShader
     {
         Tags { "RenderType"="Opaque" }
         LOD 100
-        Cull off
+        //Cull off
 
         Pass
         {
@@ -94,75 +84,46 @@ Shader "552_Shaders/CastShadow+Phong"
             }
             ENDCG
         }
-        
+
         Pass
         {  
-
-            // https://docs.unity3d.com/Manual/SL-Stencil.html
-            // Write only if Stencil has content of 2
-            // Assume the shadow receiver has rendered and set Stencil Psitions to 2
+            Name "Point Shadow"
+            Blend SrcAlpha DstAlpha, Zero One
             Stencil {
                 Ref 2
                 Comp Equal
-                // Pass Keep
             }
-
-            // project Vertex to the plane
-            // LightPos to p is a line
-            //    l(t) = LightPos + t (v - LightPos)
-            // Intersection with the receiver plane:
-            //    _Normal dot l(t) - D = 0
-            //          t = (D - (dot(n, LightPos)))  / (dot(n, (v - LightPos)))
-            //    n is _Normal
-            //    v is vertex position
-
 
             CGPROGRAM
-            #pragma vertex vert
-            #pragma fragment frag
-            
-            #include "UnityCG.cginc"
+            #include "MyInclude/PointPass.cginc"
+            ENDCG
+        }
 
-            struct appdata
-            {
-                float4 vertex : POSITION;
-            };
-
-            struct v2f
-            {
-                float4 vertex : SV_POSITION;
-            };
-
-            float3 _LightPos;  // in world space
-            float3 _Normal; // normal of plane
-            float _D; // D of plane
-            float4 _ShadowColor; // color of the shadow
-        
-            v2f vert (appdata input)
-            {
-                v2f o;
-                float4 p = input.vertex;
-
-                p = mul(unity_ObjectToWorld, p);  // objcet to world
-
-                // projection computation must e performed in world space
-                float3 Vl = (p.xyz - _LightPos);
-                float t = 0.99 * (_D - (dot(_Normal, _LightPos)))  / (dot(_Normal, Vl));
-                        // fudge a little to not lie right on top of the receiver
-                        // IF light is on the plane, Vl will be zero!! The shader will crash!
-
-                p = float4(_LightPos + t * Vl, 1);
-
-                p = mul(UNITY_MATRIX_V, p);  // To view space
-                p = mul(UNITY_MATRIX_P, p);  // Projection 
-                o.vertex = p;
-                return o;
+        Pass
+        {
+            Name "Directional Shadow"
+            Blend SrcAlpha DstAlpha, Zero One
+            Stencil {
+                Ref 2
+                Comp Equal
             }
 
-            float4 frag (v2f i) : SV_Target
-            {
-                return _ShadowColor;  // color of shadow
+            CGPROGRAM
+            #include "MyInclude/DirectionPass.cginc"
+            ENDCG
+        }
+
+        Pass
+        {
+            Name "Spot Shadow"
+            Blend SrcAlpha DstAlpha, Zero OneMinusSrcAlpha
+            Stencil {
+                Ref 2
+                Comp Equal
             }
+
+            CGPROGRAM
+            #include "MyInclude/SpotPass.cginc"
             ENDCG
         }
     }
