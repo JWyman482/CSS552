@@ -155,9 +155,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LightIsOn: 1
-  LightState: 2
+  LightState: 1
   LightColor: {r: 1, g: 1, b: 1, a: 1}
-  Intensity: 2
+  Intensity: 1.5
   Near: 55
   Far: 80
   SpotInner: 25
@@ -172,8 +172,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 46757520}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 50, z: 50}
-  m_LocalScale: {x: 4, y: 4, z: 4}
+  m_LocalPosition: {x: -50, y: 50, z: 50}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1867474779}
@@ -262,13 +262,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Ka: 0.2
-  Ambient: {r: 0.1, g: 0.1, b: 0.1, a: 1}
+  Ambient: {r: 0.3018868, g: 0.28907084, b: 0.28907084, a: 1}
   Kd: 0.8
   Diffuse: {r: 0.41091138, g: 0.49739596, b: 0.509434, a: 1}
   Ks: 0.6
   Specular: {r: 0.2, g: 0.2, b: 0.2, a: 1}
   Specularity: 1
-  ShadowWeight: 0.1
+  ShadowWeight: 0.2
   DiffuseTexture: {fileID: 2800000, guid: 4430cbd0c56859c48a4d192a66725e8c, type: 3}
 --- !u!64 &200105722
 MeshCollider:
@@ -304,7 +304,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: bc83e860cf1401b45be031239a1ba9ec, type: 2}
+  - {fileID: 2100000, guid: ad93dc8c8e06a3b47826e6b9977854eb, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -342,8 +342,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 200105720}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 15.1, y: 0, z: -19.1}
-  m_LocalScale: {x: 10.71897, y: 7.0104, z: 8.891291}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 10, y: 1, z: 10}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -363,7 +363,7 @@ GameObject:
   - component: {fileID: 396250760}
   - component: {fileID: 396250759}
   m_Layer: 0
-  m_Name: N=100
+  m_Name: TestSphere2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -377,12 +377,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 396250757}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -7.4, y: 21.3, z: -16.1}
+  m_LocalPosition: {x: -25, y: 8, z: -25}
   m_LocalScale: {x: 13.118739, y: 13.118739, z: 13.118739}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 556049619}
-  m_RootOrder: 1
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &396250759
 MonoBehaviour:
@@ -497,15 +497,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 354198794248843da8555877937ee568, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 40
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 354198794248843da8555877937ee568, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 5
+      value: -2.23
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 354198794248843da8555877937ee568, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -50
+      value: -25
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 354198794248843da8555877937ee568, type: 3}
       propertyPath: m_LocalRotation.w
@@ -574,39 +574,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &556049618
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 556049619}
-  m_Layer: 0
-  m_Name: TestSpheres
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &556049619
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 556049618}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -11.2, y: -9.5, z: -32.9}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 854312866}
-  - {fileID: 396250758}
-  m_Father: {fileID: 0}
-  m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &697092931
 GameObject:
   m_ObjectHideFlags: 0
@@ -643,7 +610,7 @@ MonoBehaviour:
   LightColor: {r: 1, g: 1, b: 1, a: 1}
   Intensity: 2
   Near: 55
-  Far: 100
+  Far: 80
   SpotInner: 25
   SpotOuter: 45
   SpotDropOff: 1
@@ -655,14 +622,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 697092931}
-  m_LocalRotation: {x: 0.27059805, y: -0.6532815, z: 0.27059805, w: 0.6532815}
-  m_LocalPosition: {x: -12.2, y: 60, z: -50}
-  m_LocalScale: {x: 4, y: 4, z: 4}
+  m_LocalRotation: {x: 0, y: 0, z: -0.38268343, w: 0.92387956}
+  m_LocalPosition: {x: 50, y: 40, z: -25}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1867474779}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 45, y: -90, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -45}
 --- !u!23 &697092934
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -761,14 +728,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 703885691}
-  m_LocalRotation: {x: 0.37182605, y: -0, z: -0, w: 0.92830247}
-  m_LocalPosition: {x: 20, y: 60, z: 50}
-  m_LocalScale: {x: 4, y: 4, z: 4}
+  m_LocalRotation: {x: 0.38268343, y: 0, z: 0, w: 0.92387956}
+  m_LocalPosition: {x: 50, y: 50, z: 50}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1867474779}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 43.657, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 45, y: 0, z: 0}
 --- !u!23 &703885694
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -890,7 +857,7 @@ GameObject:
   - component: {fileID: 854312868}
   - component: {fileID: 854312867}
   m_Layer: 0
-  m_Name: Diffuse
+  m_Name: TestSphere1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -904,12 +871,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 854312865}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 54.4, y: 21.3, z: 29.6}
+  m_LocalPosition: {x: 25, y: 8, z: 25}
   m_LocalScale: {x: 13.118739, y: 13.118739, z: 13.118739}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 556049619}
-  m_RootOrder: 0
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &854312867
 MonoBehaviour:
@@ -1185,8 +1152,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1420654389}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -11, y: 67, z: -14.9}
-  m_LocalScale: {x: 4, y: 4, z: 4}
+  m_LocalPosition: {x: -50, y: 50, z: -50}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1867474779}
@@ -1352,7 +1319,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: fa23ba21d03513f46b70227bb5a7dc67, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 8
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: fa23ba21d03513f46b70227bb5a7dc67, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1534,7 +1501,7 @@ MonoBehaviour:
   - {fileID: 697092932}
   - {fileID: 46757521}
   ShadowReceiver: {fileID: 200105725}
-  ShadowColor: {r: 1, g: 0.07075471, b: 0.07075471, a: 1}
+  ShadowColor: {r: 0.066037714, g: 0.066037714, b: 0.066037714, a: 1}
 --- !u!4 &1867474779
 Transform:
   m_ObjectHideFlags: 0
@@ -1552,7 +1519,7 @@ Transform:
   - {fileID: 697092933}
   - {fileID: 46757522}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1917654876
 PrefabInstance:

@@ -25,6 +25,7 @@ float3 _Normal; // normal of plane
 float _D; // D of plane
 float4 _ShadowColor; // color of the shadow
 float3 _LightPos;
+float _ShadowWeight;
 
 v2f vert(appdata input)
 {
@@ -80,8 +81,9 @@ float4 frag(v2f i) : SV_Target
         }
     }
     //return strength;
-    //_ShadowColor.a = strength;
-    return _ShadowColor * strength; // color of shadow
+    _ShadowColor.a = strength;
+    //return _ShadowColor * _ShadowWeight; // color of shadow
+    return _ShadowColor;
 }
 
 #endif //  SPT_PASS

@@ -80,7 +80,7 @@ Material:
     - _Periods: 9.8
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
-    - _Specularity: 1
+    - _Specularity: 3.5
     - _SrcBlend: 1
     - _Tx: 1
     - _Ty: 10
@@ -92,6 +92,6 @@ Material:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _Ka: {r: 0.09999997, g: 0.09999997, b: 0.09999997, a: 1}
-    - _Kd: {r: 0.5943396, g: 0.019624433, b: 0.5840766, a: 1}
-    - _Ks: {r: 0.09999997, g: 0.09999997, b: 0.29999998, a: 1}
+    - _Kd: {r: 0.49056602, g: 0.45122817, b: 0.4897632, a: 1}
+    - _Ks: {r: 0.4245283, g: 0.42400038, b: 0.36245105, a: 1}
   m_BuildTextureStacks: []

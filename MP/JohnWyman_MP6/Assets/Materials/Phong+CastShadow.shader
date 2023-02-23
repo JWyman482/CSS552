@@ -116,7 +116,7 @@ Shader "552_Shaders/CastShadow+Phong"
         Pass
         {
             Name "Spot Shadow"
-            Blend SrcAlpha DstAlpha, Zero OneMinusSrcAlpha
+            Blend SrcAlpha OneMinusSrcAlpha
             Stencil {
                 Ref 2
                 Comp Equal

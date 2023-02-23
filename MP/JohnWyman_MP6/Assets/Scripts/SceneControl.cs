@@ -29,15 +29,6 @@ public class SceneControl : MonoBehaviour
     
     void Start()
     {
-        /*  Either this way, or in the editor
-        Lights = new LightSource[kNumLights];
-        for (int i = 0; i < kNumLights; i++) {
-            GameObject g = new GameObject();
-            g.name = "Light " + i;
-            g.transform.SetParent(transform, false);
-            Lights[i] = g.AddComponent<LightSource>();
-        }
-        */
         Debug.Assert(ShadowReceiver != null);
     }
 
@@ -71,7 +62,6 @@ public class SceneControl : MonoBehaviour
 
         float D = Vector3.Dot(ShadowReceiver.localPosition, ShadowReceiver.up);
 
-        //Shader.SetGlobalVector("_LightPos", LightPosition.localPosition);
         Shader.SetGlobalColor("_ShadowColor", ShadowColor);
         Shader.SetGlobalVector("_Normal", ShadowReceiver.up);
         Shader.SetGlobalFloat("_D", D);
