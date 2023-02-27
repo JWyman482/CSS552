@@ -42,6 +42,8 @@ Shader "Unlit/Fog"
 
             // Fog specifics
             float _fogDensity;   // extinction coefficient (or density)
+            float _fogHeight;
+            float _fogDenominator;
             float4 _fogColor;
             float _n, _f;
             sampler2D _DepthTexture;   // from our own DepthShader
@@ -50,6 +52,7 @@ Shader "Unlit/Fog"
             uint _flag;
             static const int kShowDebugNear = 1;
             static const int kShowDebugBlend = 2;
+            static const int kShowDebugDistFog = 4;
             
             #define CHECK_DEBUG(FLAG, DEBUG_ACTION) {   \
                 if (_flag & FLAG)                       \
@@ -63,19 +66,27 @@ Shader "Unlit/Fog"
                 float4 x = tex2D(_DepthTexture, fromV.uv);
 
                 float d = x.a;  //  remember our DepthShader records distance to camera in the alpha channel
+                float h = x.y;
 
-                if (d <= 0)      // this is background
-                    d = _f;
+
+                // if (d <= 0)      // this is background
+                //     d = _f;
                                 
-                if (d <= _n) {
-                    CHECK_DEBUG(kShowDebugNear, float4(1, 0, 0, 1))
-                    return c1;  
-                }
+                // if (d <= _n) {
+                //     CHECK_DEBUG(kShowDebugNear, float4(1, 0, 0, 1))
+                //     return c1;  
+                // }
 
-                float nd = _f - _n;
-                d = (d - _n) / nd; // Normalization of D so that its between 0 and 1
-                float blend = exp(-_fogDensity * d); // blend becomes our fog
-                c1 = c1 * blend + _fogColor * (1-blend); // standard linear blending
+                // float nd = _f - _n;
+                // d = (d - _n) / nd;
+
+                if (d <= 0)
+                    return c1;
+                
+                d = (_fogHeight - h) / _fogDenominator;
+
+                float blend = exp(-_fogDensity * d);
+                c1 = c1 * blend + _fogColor * (1-blend);
                 
                 CHECK_DEBUG(kShowDebugBlend, float4(blend, blend, blend, 1))
 

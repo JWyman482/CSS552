@@ -17,7 +17,8 @@ Shader "552_Shaders/ShadowCaster_Phong"
     }
     SubShader
     {
-        Tags { "RenderType"="Opaque"}
+        Tags { "RenderType"="Opaque" "DepthValue"="InWC"}
+        // Tags { "RenderType"="Opaque"}
         LOD 100
         Cull Back
 

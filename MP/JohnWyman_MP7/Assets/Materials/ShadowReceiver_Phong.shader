@@ -24,6 +24,7 @@ Shader "552_Shaders/ShadowReceiver_Phong"
     {
         Tags { "RenderType"="Opaque" 
                 "Queue" = "Geometry-1"    // make sure to render _BEFORE_ the rest (ProjectShadow shaders)
+                "DepthValue" = "InWC"
             }
         LOD 100
         Cull off
