@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.12731704, g: 0.13414727, b: 0.121078536, a: 1}
+  m_IndirectSpecularColor: {r: 0.12731749, g: 0.13414757, b: 0.1210787, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1064,8 +1064,8 @@ GameObject:
   - component: {fileID: 963194228}
   - component: {fileID: 963194227}
   - component: {fileID: 963194226}
-  - component: {fileID: 963194229}
   - component: {fileID: 963194230}
+  - component: {fileID: 963194231}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1131,29 +1131,15 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: 0.1760719, y: 0.8203709, z: -0.33728036, w: 0.4268867}
-  m_LocalPosition: {x: -20.9, y: 25.9, z: 17.1}
+  m_LocalRotation: {x: 0.003707083, y: 0.74174833, z: -0.01412037, w: 0.67051953}
+  m_LocalPosition: {x: -77.9, y: 18.6, z: -10.4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 383637153}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &963194229
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 963194225}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ea93d2d4552f5474b8f4cee5ba34f73a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  LookAt: {fileID: 200105725}
-  DrawFrustum: 0
+  m_LocalEulerAnglesHint: {x: 1.485, y: 95.765, z: -0.77}
 --- !u!114 &963194230
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1166,13 +1152,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0290987af65f7f2408769c404deaff85, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  N: 10
-  F: 20
-  FogDensity: 1
-  FogColor: {r: 1, g: 1, b: 1, a: 1}
-  DebugFlag: 0
   FogMat: {fileID: 2100000, guid: a96444499655ba044a1a03f7fc729b4b, type: 2}
   DepthCam: {fileID: 383637151}
+--- !u!114 &963194231
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 963194225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eeb09774dd29046448a9631e5e2d4828, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LookAt: {fileID: 200105725}
+  DrawFrustum: 0
 --- !u!1 &1107777046 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 100000, guid: 354198794248843da8555877937ee568, type: 3}
@@ -1696,6 +1691,14 @@ MonoBehaviour:
   - {fileID: 46757521}
   ShadowReceiver: {fileID: 200105725}
   ShadowColor: {r: 0.0754717, g: 0.0754717, b: 0.0754717, a: 0.95686275}
+  FogDensity: 0.5
+  FogColor: {r: 0.30380216, g: 0.28488788, b: 0.6226415, a: 1}
+  FogHeight: 10
+  FogDenominator: 20
+  UseLinearFog: 0
+  UseBackgroundFog: 1
+  DebugFlag: 0
+  FogMat: {fileID: 2100000, guid: a96444499655ba044a1a03f7fc729b4b, type: 2}
 --- !u!4 &1867474779
 Transform:
   m_ObjectHideFlags: 0

@@ -26,24 +26,32 @@ public class SceneControl : MonoBehaviour
     public Transform ShadowReceiver = null;
     public Color ShadowColor = Color.black;
 
+    [Header("Fog Settings")]
+    const int kFogLinear = 1;
+    const int kFogBackground = 2;
+    public float FogDensity = 1.0f;
+    public Color FogColor = Color.white;
+    public float FogHeight = 5.0f;
+    public float FogDenominator = 10.0f;
+    public bool UseLinearFog = false;
+    public bool UseBackgroundFog = false;
+
+    public enum DebugShowFlag
+    {
+        DebugOff = 0,
+        DebugShowNear = 1,
+        DebugShowBlend = 2
+    };
+
+    public DebugShowFlag DebugFlag = DebugShowFlag.DebugOff;
+    public Material FogMat = null;
+
     void Start()
     {
         Debug.Assert(ShadowReceiver != null);
-        /*  Either this way, or in the editor
-        Lights = new LightSource[kNumLights];
-        for (int i = 0; i < kNumLights; i++) {
-            GameObject g = new GameObject();
-            g.name = "Light " + i;
-            g.transform.SetParent(transform, false);
-            Lights[i] = g.AddComponent<LightSource>();
-        }
-        */
+        Debug.Assert(FogMat != null);
     }
 
-    void SetLightLoader() {
-        for (int i = 0; i < kNumLights; i++)
-            mLgtLoader.LightSourceSetLoader(i, Lights[i]);
-    }
 
     // Update is called once per frame
     void Update()
@@ -73,5 +81,24 @@ public class SceneControl : MonoBehaviour
         Shader.SetGlobalFloat("_D", D);
         Shader.SetGlobalVector("_Normal", ShadowReceiver.up);
         Shader.SetGlobalColor("_ShadowColor", ShadowColor);
+
+        // Fog specific
+        int fogMode = (UseLinearFog) ? kFogLinear : 0;
+        fogMode |= (UseBackgroundFog) ? kFogBackground : 0;
+        FogMat.SetInteger("_fogSettings", fogMode);
+        FogMat.SetColor("_fogColor", FogColor);
+        FogMat.SetFloat("_fogDensity", FogDensity);
+        FogMat.SetFloat("_fogHeight", FogHeight);
+        FogMat.SetFloat("_fogDenominator", FogDenominator);
+
+        int f = (int)DebugFlag;
+        // Debug.Log("Flag = " + f);
+        FogMat.SetInt("_flag", f);
+
     }
-}
+
+    void SetLightLoader() {
+        for (int i = 0; i < kNumLights; i++)
+            mLgtLoader.LightSourceSetLoader(i, Lights[i]);
+    }
+ }

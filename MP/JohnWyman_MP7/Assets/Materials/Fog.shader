@@ -45,23 +45,31 @@ Shader "Unlit/Fog"
             float _fogHeight;
             float _fogDenominator;
             float4 _fogColor;
-            float _n, _f;
             sampler2D _DepthTexture;   // from our own DepthShader
 
             // For fog modes and debugging
             uint _flag;
             static const int kShowDebugNear = 1;
             static const int kShowDebugBlend = 2;
-            static const int kShowDebugDistFog = 4;
             
+            // For fog settings
+            uint _fogSettings;
+            static const int kFogLinear = 1;
+            static const int kFogBackground = 2;
+
             #define CHECK_DEBUG(FLAG, DEBUG_ACTION) {   \
                 if (_flag & FLAG)                       \
                     c1 = DEBUG_ACTION;                  \
             }
 
+            inline int FlagIsOn(int flag) {
+                return ((_fogSettings & flag) != 0);
+            }
+
             // https://learn.microsoft.com/en-us/windows/win32/direct3d9/fog-formulas
-            float4 frag (v2f fromV) : SV_Target
-            {   
+            float4 frag(v2f fromV) : SV_Target
+            {
+                float blend;
                 float4 c1 = tex2D(_MainTex, fromV.uv);
                 float4 x = tex2D(_DepthTexture, fromV.uv);
 
@@ -69,26 +77,27 @@ Shader "Unlit/Fog"
                 float h = x.y;
 
 
-                // if (d <= 0)      // this is background
-                //     d = _f;
-                                
-                // if (d <= _n) {
-                //     CHECK_DEBUG(kShowDebugNear, float4(1, 0, 0, 1))
-                //     return c1;  
-                // }
 
-                // float nd = _f - _n;
-                // d = (d - _n) / nd;
-
-                if (d <= 0)
-                    return c1;
+                // Handling the background
+                if (d <= 0) {
+                    if (!FlagIsOn(kFogBackground))
+                        return c1;
+                    else
+                        h = 0;
+                }
+                    
                 
                 d = (_fogHeight - h) / _fogDenominator;
 
-                float blend = exp(-_fogDensity * d);
+                if (FlagIsOn(kFogLinear)) 
+                    blend = max(0, 1 - d);
+                else 
+                    blend = exp(-_fogDensity * d);
+
                 c1 = c1 * blend + _fogColor * (1-blend);
                 
-                CHECK_DEBUG(kShowDebugBlend, float4(blend, blend, blend, 1))
+                CHECK_DEBUG(kShowDebugBlend, (h > _fogHeight) ? c1 : float4(blend, blend, blend, 1))
+                CHECK_DEBUG(kShowDebugNear, (h > _fogHeight) ? float4(1, 0, 0, 1) : c1)
 
                 return c1;
             }
