@@ -46,7 +46,7 @@ Shader "Unlit/Lens"
             // lens specifics
             float _inFocusN, _inFocusF;
             sampler2D _DepthTexture;   // from our own DepthShader
-            float3 _TorchPos;
+
             // For fog modes and debugging
             uint _lensFlag;
             static const int kShowDebugInFocus = 1;
@@ -67,39 +67,26 @@ Shader "Unlit/Lens"
             {   
                 float4 x = tex2D(_DepthTexture, fromV.uv);
 
-                //float f = x.a;  //  remember our DepthShader records distance to camera in the alpha channel
-                float f = distance(x.xyz, _TorchPos);
-
+                float f = x.a;  //  remember our DepthShader records distance to camera in the alpha channel
                 if (f <= 0)
                     f = _inFocusF + 1; // background, assume at infinity
 
                 float delta = 0;
-                //if (f >= _inFocusN) {
-                //    if (f <= _inFocusF) {
-                //        // clear!
-                //        CHECK_DEBUG(kShowDebugInFocus, float4(0, 1, 0, 1))
-                //        return tex2D(_MainTex, fromV.uv);
-                //    } else {
-                //        CHECK_DEBUG(kShowDebugFocusNF, float4(1, 0, 0, 1))
-                //        delta = f - _inFocusF;
-                //    }
-                //} else {
-                //    CHECK_DEBUG(kShowDebugFocusNF, float4(0, 0, 1, 1))
-                //    delta = _inFocusN - f;
-                //}
-
-                if (f <= _inFocusF) {
-                    // clear!
-                    CHECK_DEBUG(kShowDebugInFocus, float4(0, 1, 0, 1))
+                if (f >= _inFocusN) {
+                    if (f <= _inFocusF) {
+                        // clear!
+                        CHECK_DEBUG(kShowDebugInFocus, float4(0, 1, 0, 1))
                         return tex2D(_MainTex, fromV.uv);
+                    } else {
+                        CHECK_DEBUG(kShowDebugFocusNF, float4(1, 0, 0, 1))
+                        delta = f - _inFocusF;
+                    }
+                } else {
+                    CHECK_DEBUG(kShowDebugFocusNF, float4(0, 0, 1, 1))
+                    delta = _inFocusN - f;
                 }
-                else {
-                    CHECK_DEBUG(kShowDebugFocusNF, float4(1, 0, 0, 1))
-                       delta = f - _inFocusF;
-                }
-                
 
-                float a = _inFocusF-_TorchPos;
+                float a = _inFocusF-_inFocusN;
                 float blend = delta/a; // blend is a linear percentage of how far from in-focus distance
                 CHECK_DEBUG(kShowDebugBlend, float4(blend, blend, blend, 1))
 

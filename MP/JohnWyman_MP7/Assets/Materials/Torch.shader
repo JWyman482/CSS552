@@ -1,4 +1,4 @@
-Shader "Unlit/Lens"
+Shader "Unlit/Torch"
 {
     Properties
     {
@@ -27,13 +27,20 @@ Shader "Unlit/Lens"
             struct v2f
             {
                 float2 uv : TEXCOORD0;
+                float3 worldPt : TEXCOORD1;
                 float4 vertex : SV_POSITION;
             };
 
             v2f vert (appdata v)
             {
                 v2f o;
-                o.vertex = UnityObjectToClipPos(v.vertex);
+                float4 p = v.vertex;
+                p = mul(unity_ObjectToWorld, p);
+                o.worldPt = p.xyz;
+                p = mul(UNITY_MATRIX_V, p);
+                p = mul(UNITY_MATRIX_P, p);
+                o.vertex = p;
+                //o.vertex = UnityObjectToClipPos(v.vertex);
                 o.uv = v.uv;
                 return o;
             }
@@ -46,9 +53,15 @@ Shader "Unlit/Lens"
             // lens specifics
             float _inFocusN, _inFocusF;
             sampler2D _DepthTexture;   // from our own DepthShader
-            float3 _TorchPos;
+
+            // Torch Settings
+            float _TorchFar;
+            float _TorchRadius;
+            float3 _TorchPosition;
+
+
             // For fog modes and debugging
-            uint _lensFlag;
+            uint _torchFlag;
             static const int kShowDebugInFocus = 1;
             static const int kShowDebugFocusNF = 2;
             static const int kShowDebugStages = 4;
@@ -66,14 +79,27 @@ Shader "Unlit/Lens"
             float4 frag (v2f fromV) : SV_Target
             {   
                 float4 x = tex2D(_DepthTexture, fromV.uv);
+                float3 v = fromV.worldPt;
+
+                float4 c1 = tex2D(_MainTex, fromV.uv);
+                //float d = distance(tp, v);
+                float d = distance(_TorchPosition, v);
+
+                if (d < _TorchRadius)
+                    return c1;
+                else {
+                    float n = d - _TorchRadius;
+                    float f = _TorchFar - _TorchRadius;
+                    float blend = smoothstep(0.0, 1.0, 1.0 - (n * n) / (f * f));
+                    c1 = c1 * blend + filter_15(fromV.uv) * (1 - blend);
+                    return c1;
+                }
 
                 //float f = x.a;  //  remember our DepthShader records distance to camera in the alpha channel
-                float f = distance(x.xyz, _TorchPos);
+                //if (f <= 0)
+                //    f = _inFocusF + 1; // background, assume at infinity
 
-                if (f <= 0)
-                    f = _inFocusF + 1; // background, assume at infinity
-
-                float delta = 0;
+                //float delta = 0;
                 //if (f >= _inFocusN) {
                 //    if (f <= _inFocusF) {
                 //        // clear!
@@ -88,31 +114,20 @@ Shader "Unlit/Lens"
                 //    delta = _inFocusN - f;
                 //}
 
-                if (f <= _inFocusF) {
-                    // clear!
-                    CHECK_DEBUG(kShowDebugInFocus, float4(0, 1, 0, 1))
-                        return tex2D(_MainTex, fromV.uv);
-                }
-                else {
-                    CHECK_DEBUG(kShowDebugFocusNF, float4(1, 0, 0, 1))
-                       delta = f - _inFocusF;
-                }
-                
+                //float a = _inFocusF-_inFocusN;
+                //float blend = delta/a; // blend is a linear percentage of how far from in-focus distance
+                //CHECK_DEBUG(kShowDebugBlend, float4(blend, blend, blend, 1))
 
-                float a = _inFocusF-_TorchPos;
-                float blend = delta/a; // blend is a linear percentage of how far from in-focus distance
-                CHECK_DEBUG(kShowDebugBlend, float4(blend, blend, blend, 1))
+                //float4 c1;
+                //if (blend < a) {
+                //    CHECK_DEBUG(kShowDebugStages, float4(0.5, 0.5, 0.5, 1))
+                //    c1 = filter_5(fromV.uv);
+                //} else {
+                //    CHECK_DEBUG(kShowDebugStages, float4(0, 0, 0, 1))
+                //    c1 = filter_15(fromV.uv);
+                //}
 
-                float4 c1;
-                if (blend < a) {
-                    CHECK_DEBUG(kShowDebugStages, float4(0.5, 0.5, 0.5, 1))
-                    c1 = filter_5(fromV.uv);
-                } else {
-                    CHECK_DEBUG(kShowDebugStages, float4(0, 0, 0, 1))
-                    c1 = filter_15(fromV.uv);
-                }
-
-                return c1;                
+                //return c1;                
             }
             ENDCG
         }

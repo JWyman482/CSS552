@@ -4,11 +4,8 @@ using UnityEngine;
 
 public class LensControl : MonoBehaviour
 {
-    public float FocalDistant = 1.0f;
-    public float Aperture = 1.0f;  // all within this range are in focus
-
-    public float radius = 10f;
-    public Transform sphere;
+    public float FocalDistant = 5.0f;
+    public float Aperture = 2.0f;  // all within this range are in focus
     // for debug support
     public enum DebugShowFlag {
         DebugOff = 0,
@@ -37,7 +34,6 @@ public class LensControl : MonoBehaviour
         // Fog specific
         LenseMat.SetFloat("_inFocusN", FocalDistant-Aperture);
         LenseMat.SetFloat("_inFocusF", FocalDistant+Aperture);
-        LenseMat.SetVector("_TorchPos", sphere.localPosition);
 
         int f = (int) DebugFlag;
         // Debug.Log("Flag = " + f);
