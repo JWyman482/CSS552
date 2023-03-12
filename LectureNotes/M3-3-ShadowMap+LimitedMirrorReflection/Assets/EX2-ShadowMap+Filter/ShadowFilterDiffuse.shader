@@ -71,16 +71,17 @@ Shader "Unlit/ShadowFilterDiffuse"
             v2f vert (appdata v)
             {
                 v2f o;
-                float4 p = mul(unity_ObjectToWorld, v.vertex);  // objcet to world
+                float4 p = mul(unity_ObjectToWorld, v.vertex);  // object to world
 
                 // For ShadowMap
                 p.xyz = p.xyz + _NormalBias * v.normal; // push the position out of the surface a little
 
-                o.worldPos = p.xyz;  // p.w is 1.0 at this poit
+                o.worldPos = p.xyz;  // p.w is 1.0 at this point
 
                 p = mul(UNITY_MATRIX_V, p);  // To view space
-                o.vertex = mul(UNITY_MATRIX_P, p);  // Projection 
-                            
+                p = mul(UNITY_MATRIX_P, p);  // Projection 
+                o.vertex = p;
+                                            
                 o.normal = normalize(mul(v.normal, (float3x3)unity_WorldToObject)); 
                 o.uv = v.uv;
 
