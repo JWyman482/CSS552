@@ -14,6 +14,8 @@ public class SceneControl : MonoBehaviour
     const int kCompSpecular = 8;
     const int kCompDistAtten = 16;
     const int kCompAngularAtten = 32;
+    const int kUseShadow = 64;
+    const int kUseMirror = 128;
     private static int kNumLights = 4; // must be identical to the M2_Shader
 
     public CameraPostProcessControl.PostProcessOptions PostProcessingOrder = CameraPostProcessControl.PostProcessOptions.eOff;
@@ -28,21 +30,13 @@ public class SceneControl : MonoBehaviour
     public LightSource[] Lights;
     LightsLoader mLgtLoader = new LightsLoader();
 
-    public Transform ShadowReceiver = null;
+    public bool Shadow = true;
     public Color ShadowColor = Color.black;
+
+    public bool UseMirror = true;
 
     void Start()
     {
-        Debug.Assert(ShadowReceiver != null);
-        /*  Either this way, or in the editor
-        Lights = new LightSource[kNumLights];
-        for (int i = 0; i < kNumLights; i++) {
-            GameObject g = new GameObject();
-            g.name = "Light " + i;
-            g.transform.SetParent(transform, false);
-            Lights[i] = g.AddComponent<LightSource>();
-        }
-        */
         GroundFog.InitFogControl();
         Camera.main.gameObject.GetComponent<CameraPostProcessControl>().InitFogControl(GroundFog);
     }
@@ -71,16 +65,14 @@ public class SceneControl : MonoBehaviour
         mode |= (Specular) ? kCompSpecular : 0;
         mode |= (DistanceAttenuation) ? kCompDistAtten : 0;
         mode |= (AngularAttenuation) ? kCompAngularAtten : 0;
+        mode |= (Shadow) ? kUseShadow : 0;
+        mode |= (UseMirror) ? kUseMirror : 0;
         Shader.SetGlobalInt("_ShaderMode", mode);
-        // Debug.Log("ShaderMode=" + mode);
 
         SetLightLoader();
         mLgtLoader.LoadLightsToShader();
 
         // Shadow receiver support
-        float D = Vector3.Dot(ShadowReceiver.localPosition, ShadowReceiver.up);
-        Shader.SetGlobalFloat("_D", D);
-        Shader.SetGlobalVector("_Normal", ShadowReceiver.up);
         Shader.SetGlobalColor("_ShadowColor", ShadowColor);
 
         // accessing MainCamera

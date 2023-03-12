@@ -8,6 +8,8 @@ static const int kDiffuse = 4;
 static const int kSpecular = 8;
 static const int kDistanceAtten = 16;
 static const int kAngularAtten = 32;
+static const int kUseShadow = 64;
+static const int kUseMirror = 128;
 
 inline int FlagIsOn(int flag) {
     return ((_ShaderMode & flag) != 0);

@@ -8,7 +8,7 @@ Shader "552_Shaders/ShadMap_Phong"
 
     SubShader
     {
-        Tags { "RenderType"="Opaque" "DepthValue"="InWC"}
+        Tags { "RenderType"="Opaque" "DepthValue"="InWC" "MyReflection"="Object"}
         LOD 100
 
         Pass // normal phong pass
@@ -86,6 +86,7 @@ Shader "552_Shaders/ShadMap_Phong"
             INSHADOW_SIZE(15)
 
             float LightStrength(float d, float2 uv) {
+                if (!FlagIsOn(kUseShadow)) return 1;
                 float blocked = 0;
                 if (_MapFlag & kFilter3) blocked = InShadow_3(d, uv);
                 else if (_MapFlag & kFilter5) blocked = InShadow_5(d, uv);
