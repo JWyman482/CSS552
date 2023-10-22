@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -133,7 +133,6 @@ GameObject:
   m_Component:
   - component: {fileID: 62991663}
   - component: {fileID: 62991665}
-  - component: {fileID: 62991664}
   m_Layer: 0
   m_Name: ProjectorCam
   m_TagString: Untagged
@@ -149,21 +148,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 62991662}
   m_LocalRotation: {x: 0.2012787, y: -0.03672406, z: 0.007555643, w: 0.9788162}
-  m_LocalPosition: {x: 0.71, y: 2.54, z: -4.23}
+  m_LocalPosition: {x: 0.71, y: 2.7, z: -4.23}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 505986786}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 36.087, y: 31.184, z: -6.005}
---- !u!81 &62991664
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 62991662}
-  m_Enabled: 1
 --- !u!20 &62991665
 Camera:
   m_ObjectHideFlags: 0
@@ -189,7 +180,7 @@ Camera:
     height: 1
   near clip plane: 0.73
   far clip plane: 7.66
-  field of view: 15.413816
+  field of view: 12
   orthographic: 0
   orthographic size: 5
   m_Depth: 0
@@ -354,6 +345,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e6dba2d0e6e40442be532f4d031c36f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Tile: {x: 2, y: 2}
+  Offset: {x: -0.5, y: -0.5}
+  BoundColor: {r: 0.24811985, g: 0.9150943, b: 0.09064613, a: 0}
+  Umode: 3
+  Vmode: 3
+  resetValues: 0
 --- !u!1001 &679565429
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -699,8 +696,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2036752223}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: -10}
+  m_LocalRotation: {x: -0.14189611, y: 0.07654029, z: -0.011008564, w: -0.9868566}
+  m_LocalPosition: {x: -1.7711163, y: 2.136782, z: -3.258648}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -719,5 +716,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eeb09774dd29046448a9631e5e2d4828, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LookAt: {fileID: 149472640}
+  LookAt: {fileID: 505986786}
   DrawFrustum: 0

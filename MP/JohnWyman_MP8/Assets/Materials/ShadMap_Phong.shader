@@ -41,7 +41,6 @@ Shader "552_Shaders/ShadMap_Phong"
 
             sampler2D _MainTex;
             float4 _CameraPosition;
-            float4 _LightPos;
 
             sampler2D _ShadowMap;
             float4 _ShadowColor;
@@ -164,36 +163,6 @@ Shader "552_Shaders/ShadMap_Phong"
 
                 return shadedResult;
             }
-            // float4 frag (v2f i) : SV_Target
-            // {
-            //     // sample the texture
-            //     float4 col = float4(0.9, 0.7, 0.7, 1.0);
-            //     if ((i.uv.x != 0) && (i.uv.y != 0))
-            //         col = tex2D(_MainTex, i.uv);
-                
-            //     float3 L = _LightPos - i.worldPos;
-            //     float distToLight = length(L);
-            //     L = L / distToLight;  // normalize L
-            //     float NdotL = max(dot(i.normal, L), 0);
-
-            //     // now, we are being illuminated by the light ... 
-            //     DEBUG_SHOW(kShowLightDistance, V_TO_F4(distToLight), _DebugDistScale)
-            //     // now, let's do shadow compuration
-            //     float4 wcPt = tex2D(_ShadowMap, i.lightNDC);
-            //     float distFromMap = wcPt.a;  // this is distance
-            //     DEBUG_SHOW(kShowMapDistance, V_TO_F4(distFromMap), _DebugDistScale)
-            //     DEBUG_SHOW(kShowMapWC, wcPt, _DebugDistScale)              
-                
-            //     distFromMap += _DepthBias;  // push slightly outward to avoid self-shadowing
-            //     DEBUG_SHOW(kShowMapDistanceWithBias, V_TO_F4(distFromMap), _DebugDistScale)
-                                
-            //     if (distToLight > distFromMap) { // in shadow!
-            //         NdotL *= 0.1;
-            //         DEBUG_SHOW(kShowShadowInRed, float4(1, 0, 0, 1), 1)
-            //     }               
-
-            //     return float4(0.1, 0.1, 0.1, 0) + (col * NdotL);  // so will not be completely black
-            // }
             ENDCG
         }
     }
